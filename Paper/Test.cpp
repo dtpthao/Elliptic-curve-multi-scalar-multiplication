@@ -151,11 +151,11 @@ void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[1]);
 		res.c[1] += epoint2_comp(R1, R);
 
-		/*ShrDuration(k, P, R1, ShamirMul_JSF, res.t[0]);
-		res.c[0] += epoint2_comp(R1, R);*/
-
-		SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
+		ShrDuration(k, P, R1, ShamirMul_JSF_origin, res.t[0]);
 		res.c[0] += epoint2_comp(R1, R);
+
+		/*SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
+		res.c[0] += epoint2_comp(R1, R);*/
 	}
 	msg = "test oldpremul+newJSF and newJSF+newpremul";
 	res.t[2] /= TESTBIN;
