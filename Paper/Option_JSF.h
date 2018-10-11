@@ -7,10 +7,6 @@
 
 DWORD GenJSF(big R, big S, char *JSFr, char *JSFs);
 
-inline void PreMul_JSF(pepoint P, pepoint Q, pepoint *listpoint);
-
-void ShamirMul_JSF(big a, pepoint P, big b, pepoint Q, pepoint R);
-
 inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt);
 
 void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R);

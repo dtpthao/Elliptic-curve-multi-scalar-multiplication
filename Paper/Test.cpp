@@ -131,6 +131,7 @@ void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 		R1 = epoint_init();
 	big k = mirvar(1);
 	PointList plShrJSF(9);
+	PointList plShrJSF1(9);
 
 	res.t[0] = res.t[1] = res.t[2] = 0;
 
@@ -150,13 +151,13 @@ void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[1]);
 		res.c[1] += epoint2_comp(R1, R);
 
-		ShrDuration(k, P, R1, ShamirMul_JSF, res.t[0]);
-		res.c[0] += epoint2_comp(R1, R);
-
-		/*SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
+		/*ShrDuration(k, P, R1, ShamirMul_JSF, res.t[0]);
 		res.c[0] += epoint2_comp(R1, R);*/
+
+		SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
+		res.c[0] += epoint2_comp(R1, R);
 	}
-	msg = "test oldJSF and newJSF";
+	msg = "test oldpremul+newJSF and newJSF+newpremul";
 	res.t[2] /= TESTBIN;
 	res.t[0] /= TESTBIN;
 	res.t[1] /= TESTBIN;
@@ -164,6 +165,7 @@ void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 	res.p[1] = (res.t[1] / res.t[0]) * 100;
 	res.p[2] = (res.t[2] / res.t[0]) * 100;
 	plShrJSF.Destructor();
+	plShrJSF1.Destructor();
 	epoint_free(R); epoint_free(R1);
 	mirkill(k);
 }
