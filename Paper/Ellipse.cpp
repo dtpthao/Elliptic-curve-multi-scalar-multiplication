@@ -1,5 +1,4 @@
 ﻿#include "Ellipse.h"
-#include <time.h>
 #include <iostream>
 
 //PointList globalShrBin(4);
@@ -39,6 +38,18 @@ int GenEC(EC_CONSTANTS_F2m_POLY EC, big a, big b, pepoint G, big x, big y, big n
 		return 1;
 	if (!epoint2_set(x, y, 0, G)) return 1;
 }
+
+//int GenEC(EC_CONSTANTS_F2m_POLY *EC, big a, big b, pepoint G, big x, big y, big n)
+//{
+//	a->w[0] = EC->a;
+//	if (cinstr(b, EC->b) != strlen(EC->b)) return 1;
+//	if (cinstr(x, EC->Gx) != strlen(EC->Gx)) return 1;
+//	if (cinstr(y, EC->Gy) != strlen(EC->Gy)) return 1;
+//	if (cinstr(n, EC->n) != strlen(EC->n)) return 1;
+//	if (!ecurve2_init(EC->m, EC->k3, EC->k2, EC.k1, a, b, 1, MR_PROJECTIVE))
+//		return 1;
+//	if (!epoint2_set(x, y, 0, G)) return 1;
+//}
 
 void cotnumEp(pepoint P) {
 	epoint2_norm(P);
@@ -100,6 +111,57 @@ void GetConstainsEC(EC_CONSTANTS_F2m_POLY &EC, unsigned int m) {
 		break;
 	default: EC = {};
 		break;
+	}
+}
+
+void readFile(const char *fileName, EC_CONSTANTS_F2m_POLY EC[NUM_OF_EC]) {
+	
+	int len = 0;
+	FILE *f; 
+	fopen_s(&f, fileName, "r");
+	if ((f == NULL)) {
+		printf("File could not be opened\n");
+	}
+	else {
+		for (int i = 0; i < NUM_OF_EC; i++) {
+			fscanf_s(f, "%d%d\n%[^\n]", &EC[i].a, &len, EC[i].b);
+			fscanf_s(f, "%d%d%d%d%d", &EC[i].m, &EC[i].k1, &EC[i].k2, &EC[i].k3, &EC[i].h);
+			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].Gx);
+			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].Gy);
+			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].n);
+		}
+		/*for (int i = 0; i < NUM_OF_EC; i++) {
+			printf("%d\n%d\n\t%s\n%d %d %d %d %d\n%d\n\t%s\n%d\n\t%s\n%d\n\t%s\n\n",
+				EC[i].a, len, EC[i].b, EC[i].m, EC[i].k1, EC[i].k2,
+				EC[i].k3, EC[i].h, len, EC[i].n, len, EC[i].Gx, len, EC[i].Gy);
+		}*/
+		fclose(f);
+	}
+}
+
+void readFile(const char *fileName, EC_CONSTANTS_F2m_POLY &EC) {
+
+	int len = 0;
+	FILE *f;
+	fopen_s(&f, fileName, "r");
+	if ((f == NULL)) {
+		printf("File could not be opened\n");
+	}
+	else {
+		for (int i = 0; i < NUM_OF_EC; i++) {
+			fscanf_s(f, "%d%d\n%[^\n]", &EC.a, &len, EC.b);
+			fscanf_s(f, "%d%d%d%d%d", &EC.m, &EC.k1, &EC.k2, &EC.k3, &EC.h);
+			
+			fscanf_s(f, "%d\n%[^\n]", &len, EC.Gx);
+			fscanf_s(f, "%d\n%[^\n]", &len, EC.Gy);
+			fscanf_s(f, "%d\n%[^\n]", &len, EC.n);
+		}
+		/*for (int i = 0; i < NUM_OF_EC; i++) {
+			printf("%d\n%d\n\t%s\n%d %d %d %d %d\n%d\n\t%s\n%d\n\t%s\n%d\n\t%s\n\n",
+				EC.a, len, EC.b, EC.m, EC.k1, EC.k2,
+				EC.k3, EC.h, len, EC.n, len, EC.Gx, len, EC.Gy);
+		}
+		fclose(f);*/
 	}
 }
 

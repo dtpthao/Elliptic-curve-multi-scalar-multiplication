@@ -2,9 +2,13 @@
 #define _ELLIPSE_H
 
 #include <Windows.h>
+#include <time.h>
+#include <stdio.h>
 extern "C" {
 #include"miracl.h"
 }
+
+#define NUM_OF_EC	10
 
 #define EC163 0
 #define EC233 1
@@ -38,11 +42,15 @@ typedef struct PointList {
 
 void InitStrongRNG(csprng *Rng);
 
-int GenEC(EC_CONSTANTS_F2m_POLY EC, big a, big b, pepoint G, big x, big y, big n);
+int GenEC(EC_CONSTANTS_F2m_POLY, big, big, pepoint, big, big, big);		//Initialize EC
 
-void cotnumEp(pepoint P);
+void cotnumEp(pepoint P);	//display P.x, P.y
 
-void GetConstainsEC(EC_CONSTANTS_F2m_POLY &EC, unsigned int m);
+void GetConstainsEC(EC_CONSTANTS_F2m_POLY &, unsigned int);		//get const Input params EC
+
+void readFile(const char *, EC_CONSTANTS_F2m_POLY[NUM_OF_EC]);	//get list of input params EC 
+
+void readFile(const char *, EC_CONSTANTS_F2m_POLY &);
 
 BOOL ecurve2_padd(_MIPD_ epoint *p, epoint *pa);
 

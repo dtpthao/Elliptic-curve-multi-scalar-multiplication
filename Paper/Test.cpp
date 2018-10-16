@@ -2,7 +2,6 @@
 
 /*
  * Compare single scalar multiplication L2R and R2L
- * NOT FOUND the propblem
  */
 void TestSclBin(csprng &Rng, pepoint P, big n, Result &res)
 {
@@ -25,52 +24,6 @@ void TestSclBin(csprng &Rng, pepoint P, big n, Result &res)
 
 		SclDuration(k, P, R1, ScalarMul_Bin_R2L, res.t[1]);
 		res.c[1] += epoint2_comp(R1, R);
-
-		SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
-		res.c[0] += epoint2_comp(R1, R);
-	}
-	res.t[2] /= TESTBIN;
-	res.t[0] /= TESTBIN;
-	res.t[1] /= TESTBIN;
-	res.p[0] = 100;
-	res.p[1] = (res.t[1] / res.t[0]) * 100;
-	res.p[2] = (res.t[2] / res.t[0]) * 100;
-	plShrBin.Destructor();
-	epoint_free(R); epoint_free(R1);
-	mirkill(k);
-}
-
-/*
- * Compare single scalar multiplication via shamir method
- * 
- * 
- */
-
-
-void TestBin(csprng &Rng, pepoint P, big n, Result &res)
-{
-	pepoint R = epoint_init(),
-		R1 = epoint_init();
-	big k = mirvar(1);
-	PointList plShrBin(4);
-	res.t[0] = res.t[1] = res.t[2] = 0;
-	pepoint Q = epoint_init();
-	big a = mirvar(1), b = mirvar(1);
-	
-	for (int i = 0; i < TESTBIN; i++) {
-		strong_bigrand(&Rng, n, k);
-		
-		if (k->len == 0 || (k->len == 1 && k->w[0] == 1)) {
-			i--;
-			continue;
-		}
-		SclDuration(k, P, R, ecurve2_mult, res.t[2]);
-
-		ShrDuration(k, P, R1, &plShrBin, ShamirMul_Bin_ptr, res.t[1]);
-		res.c[1] += epoint2_comp(R1, R);
-
-		/*ShrDuration(k, P, R1, ShamirMul_Bin, res.t[1]);
-		res.c[1] += epoint2_comp(R1, R);*/
 
 		SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
 		res.c[0] += epoint2_comp(R1, R);
@@ -125,17 +78,15 @@ void TestBin(csprng &Rng, pepoint P, big n, Result &res)
 //	mirkill(k);
 //}
 
-void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
+void Test(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 {
 	pepoint R = epoint_init(),
 		R1 = epoint_init();
 	big k = mirvar(1);
+	PointList plShrBin(9);
 	PointList plShrJSF(9);
-	PointList plShrJSF1(9);
 
-	res.t[0] = res.t[1] = res.t[2] = 0;
-
-	for (int i = 0; i < TESTBIN; i++) {
+	for (int i = 0; i < TEST; i++) {
 		strong_bigrand(&Rng, n, k);
 
 		if (k->len == 0 || (k->len == 1 && k->w[0] == 1)) {
@@ -143,29 +94,34 @@ void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 			continue;
 		}
 
-		SclDuration(k, P, R, ecurve2_mult, res.t[2]);
+		SclDuration(k, P, R, ecurve2_mult, res.t[LIB]);
+
+		ShrDuration(k, P, R1, &plShrBin, ShamirMul_Bin_ptr, res.t[1]);
+		res.c[1] += epoint2_comp(R1, R);
 
 		//ShrDuration(k, P, R1, ShamirMul_JSF, res.t[1]);
 		//res.c[1] += epoint2_comp(R1, R);
 
-		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[1]);
-		res.c[1] += epoint2_comp(R1, R);
+		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF1, res.t[2]);
+		res.c[2] += epoint2_comp(R1, R);
 
-		ShrDuration(k, P, R1, ShamirMul_JSF_origin, res.t[0]);
-		res.c[0] += epoint2_comp(R1, R);
+		//ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[0]);
+		//res.c[0] += epoint2_comp(R1, R);
 
-		/*SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
+		/*ShrDuration(k, P, R1, ShamirMul_JSF_origin, res.t[0]);
 		res.c[0] += epoint2_comp(R1, R);*/
+
+		SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
+		res.c[0] += epoint2_comp(R1, R);
 	}
-	msg = "test oldpremul+newJSF and newJSF+newpremul";
-	res.t[2] /= TESTBIN;
-	res.t[0] /= TESTBIN;
-	res.t[1] /= TESTBIN;
-	res.p[0] = 100;
-	res.p[1] = (res.t[1] / res.t[0]) * 100;
-	res.p[2] = (res.t[2] / res.t[0]) * 100;
+	msg = "\t\tScalarBin	ShamirBin	ShamirJSF	 Lib";
+	for (int i = 0; i <= LIB; i++) {
+		res.t[i] /= TESTBIN;
+		res.p[i] = (res.t[i] / res.t[0]) * 100;
+	}
+	
 	plShrJSF.Destructor();
-	plShrJSF1.Destructor();
+	plShrBin.Destructor();
 	epoint_free(R); epoint_free(R1);
 	mirkill(k);
 }

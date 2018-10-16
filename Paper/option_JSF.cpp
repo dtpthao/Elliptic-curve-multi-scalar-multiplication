@@ -41,23 +41,6 @@ DWORD GenJSF(big R, big S, char *JSFr, char *JSFs)
 
 }
 
-DWORD GenJSF1(big R, big S, char *JSFr, char *JSFs)
-{
-	big L1 = mirvar(1), L2 = mirvar(1), R1 = mirvar(0), S1 = mirvar(0);
-	bool d1 = 0, d2 = 0;
-	DWORD lenJSF = 0;
-
-	copy(R, L1); copy(S, L2); copy(R, R1); copy(S, S1);
-	while (L1->len > 0 || L2->len > 0) {
-		lenJSF++;
-		subGenJSF(L1, L2, JSFr[lenJSF], d1, R1);
-		subGenJSF(L2, L1, JSFs[lenJSF], d2, S1);
-		incr(R1, d1, L1);
-		incr(S1, d2, L2);
-	}
-	return lenJSF;
-}
-
 inline void PreMul_JSF_origin(pepoint P, pepoint Q, pepoint *plist)
 {
 	for (int i = 0; i < 9; i++) {
@@ -107,7 +90,7 @@ void ShamirMul_JSF_origin(big a, pepoint P, big b, pepoint Q, pepoint R)
 	char JSFb[300] = { 0 };
 	DWORD lenJSF;
 
-	PreMul_JSF(P, Q, plist);
+	PreMul_JSF_origin(P, Q, plist);
 	lenJSF = GenJSF(a, b, JSFa, JSFb);
 	epoint2_set(0, 0, 1, R);
 
@@ -166,32 +149,53 @@ void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)
 	}
 }
 
+
+DWORD GenJSF1(big R, big S, char *JSFr, char *JSFs)
+{
+	big L1 = mirvar(1), L2 = mirvar(1), R1 = mirvar(0), S1 = mirvar(0);
+	bool d1 = 0, d2 = 0;
+	DWORD lenJSF = 0;
+
+	copy(R, L1); copy(S, L2); copy(R, R1); copy(S, S1);
+	while (L1->len > 0 || L2->len > 0) {
+		lenJSF++;
+		subGenJSF(L1, L2, JSFr[lenJSF], d1, R1);
+		subGenJSF(L2, L1, JSFs[lenJSF], d2, S1);
+		incr(R1, d1, L1);
+		incr(S1, d2, L2);
+	}
+	mirkill(L1); mirkill(L2);
+	mirkill(R1); mirkill(S1);
+	return lenJSF;
+}
+
 // {P+Q, P, P-Q, Q, 0, -Q, Q-P, -P, -P-Q}
 inline void PreMul_JSF1(pepoint P, pepoint Q, PL *opt)
 {
+	pepoint tmp = epoint_init();
 	epoint2_copy(P, opt->plist[0]);
 	ecurve2_padd(Q, opt->plist[0]);
+	epoint2_norm(opt->plist[0]);
 
 	epoint2_copy(P, opt->plist[1]);
 	epoint2_copy(Q, opt->plist[3]);
 
 	epoint2_copy(Q, opt->plist[5]);
-	epoint2_negate(opt->plist[5]);
+	epoint2_negate(opt->plist[5]);		//plist[5] is normalized
+
 	epoint2_copy(P, opt->plist[7]);
 	epoint2_negate(opt->plist[7]);
 
 	epoint2_copy(P, opt->plist[2]);
 	ecurve2_padd(opt->plist[5], opt->plist[2]);
+	epoint2_norm(opt->plist[2]);
 
 	epoint2_copy(Q, opt->plist[6]);
 	ecurve2_padd(opt->plist[7], opt->plist[6]);
+	epoint2_norm(opt->plist[6]);
 
 	epoint2_copy(opt->plist[0], opt->plist[8]);
 	epoint2_negate(opt->plist[8]);
-
-	for (int i = 0; i < 9; i++) {
-		epoint2_norm(opt->plist[i]);
-	}
 }
 
 void ShamirMul_JSF1(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)
@@ -201,8 +205,8 @@ void ShamirMul_JSF1(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)
 	DWORD lenJSF;
 	int index;
 
-	PreMul_JSF(P, Q, opt);
-	lenJSF = GenJSF(a, b, JSFa, JSFb);
+	PreMul_JSF1(P, Q, opt);
+	lenJSF = GenJSF1(a, b, JSFa, JSFb);
 	epoint2_set(0, 0, 1, R);
 
 	for (int i = lenJSF; i > 0; i--) {

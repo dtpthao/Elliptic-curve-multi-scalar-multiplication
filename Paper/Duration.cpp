@@ -1,5 +1,4 @@
 #include "Duration.h"
-#include "ShamirMul.h"
 #include <iostream>
 #include "option_Bin.h"
 
@@ -65,8 +64,9 @@ void ShrDuration(big k, pepoint P, pepoint R, PL *opt,
 	stopWatch timer;
 	for (int i = 0; i < REPEAT; i++) {
 		startTimer(&timer);
-		ShamirDecomposit(k, P, a, Q, b);
-		(*func) (opt, a, P, b, Q, R);
+		/*ShamirDecomposit(k, P, a, Q, b);
+		(*func) (opt, a, P, b, Q, R);*/
+		ShamirMul(k, P, R, opt, (*func));
 		stopTimer(&timer);
 
 		dur = getTickCount(&timer);
@@ -101,24 +101,6 @@ void ShrDuration(big k, pepoint P, pepoint R,
 	t += min;
 	epoint_free(Q);
 	mirkill(a); mirkill(b);
-}
-
-/*
- * Counting execution time of double scalar multiplication
- */
-void ShrDuration(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R, double &t)
-{
-	LONGLONG dur, min = LONG_MAX;
-	stopWatch timer;
-
-	for (int i = 0; i < REPEAT; i++) {
-		startTimer(&timer);
-		ShamirMul_Bin_ptr(opt, a, P, b, Q, R);
-		stopTimer(&timer);
-		dur = getTickCount(&timer);
-		min = (min < dur) ? min : dur;
-	}
-	t += min;
 }
 
 /*

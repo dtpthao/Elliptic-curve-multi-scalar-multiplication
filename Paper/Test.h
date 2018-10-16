@@ -24,7 +24,8 @@ using namespace std;
 #define TESTSHR 12
 #define TESTwNAF 13
 #define TESTGF	14
-#define TESTBIN	500
+#define TESTBIN	1000
+#define TEST	5000
 
 #define SclBin	0
 #define ShrBin	2
@@ -37,12 +38,12 @@ using namespace std;
 #define ShrJT	10
 #define ShrBNBC 12
 #define ShrAKDAC 14
-#define LIB		16
+#define LIB		3			//16
 
 struct Result {
-	double t[LIB] = { 0 };
+	double t[LIB + 1] = { 0 };
 	double p[LIB + 1] = { 0 };
-	unsigned int c[LIB] = { 0 };
+	unsigned int c[LIB + 1] = { 0 };
 };
 
 
@@ -57,7 +58,7 @@ void TestBin1(csprng &Rng, pepoint P, big n, Result &res);
 
 void TestSclBin(csprng &Rng, pepoint P, big n, Result &res);
 
-void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg);
+void Test(csprng &Rng, pepoint P, big n, Result &res, string &msg);
 
 
 /************************************************************************

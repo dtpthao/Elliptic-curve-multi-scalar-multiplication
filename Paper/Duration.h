@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <time.h>
 #include "Ellipse.h"
+#include "ShamirMul.h"
 
 typedef epoint* pepoint;
 
@@ -15,15 +16,15 @@ typedef struct {
 inline void startTimer(stopWatch *timer);
 inline void stopTimer(stopWatch *timer);
 inline double LIToSecs(LARGE_INTEGER *L);
-inline double getElapsedTime(stopWatch *timer);
-inline LONGLONG getTickCount(stopWatch *timer);
+inline double getElapsedTime(stopWatch *timer);	//get time in secs/msecs
+inline LONGLONG getTickCount(stopWatch *timer);	//get time in tick
 
 
 void SclDuration(big k, pepoint P, pepoint R,
 	void(*func) (big, pepoint, pepoint), double &min);
 
 void ShrDuration(big k, pepoint P, pepoint R, PL *opt,
-	void(*func) (PL *, big, pepoint, big, pepoint, pepoint), double &min);
+	void(*func) (PL *, big, pepoint, big, pepoint, pepoint), double &t);
 
 void ShrDuration(big k, pepoint P, pepoint R,
 	void(*func) (big, pepoint, big, pepoint, pepoint), double &min);

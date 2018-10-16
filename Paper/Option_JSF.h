@@ -15,4 +15,6 @@ inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt);
 
 void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R);
 
+void ShamirMul_JSF1(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R);
+
 #endif

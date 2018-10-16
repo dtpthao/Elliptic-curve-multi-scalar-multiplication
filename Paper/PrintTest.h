@@ -47,29 +47,25 @@ printf("%10s %10s %10s %10s %10s\n", \
 #define PRINTPERCENT(per) printf("%9.1f%% ", per);
 #define PRINTTASK(task) printf("%10d ", task);
 
-void printAll_tmin(int* m, double tmin[6][LIB + 1]);
-void printAll_per(int* m, double per[6][LIB + 1]);
-void printAll_corr(int* m, unsigned int correct[6][LIB]);
+//void printAll_tmin(int* m, double tmin[6][LIB + 1]);
+//void printAll_per(int* m, double per[6][LIB + 1]);
+//void printAll_corr(int* m, unsigned int correct[6][LIB]);
+//
+//void printAll_m(int* m, double tmin[6][LIB + 1],
+//	double per[6][LIB + 1], unsigned int correct[6][LIB]);
+//
+//void printAll_Shr(int* m, double tmin[6][LIB + 1],
+//	double per[6][LIB + 1], unsigned int correct[6][LIB]);
+//
+//void printAll_Scl(int* m, double tmin[6][LIB + 1],
+//	double per[6][LIB + 1], unsigned int correct[6][LIB]);
+//
+//void printGenFormScl(int* m, double tmin[6][LIB + 1], DWORD task[6][LIB + 1]);
+//void printGenFormShr(int* m, double tmin[6][LIB + 1], DWORD task[6][LIB + 1]);
+//
+//void printAll_SclwNAF(int* m, double tmin[6][7],
+//	double per[6][7], unsigned int correct[6][7]);
 
-/*
-
-*/
-void printAll_m(int* m, double tmin[6][LIB + 1],
-	double per[6][LIB + 1], unsigned int correct[6][LIB]);
-
-void printAll_Shr(int* m, double tmin[6][LIB + 1],
-	double per[6][LIB + 1], unsigned int correct[6][LIB]);
-
-void printAll_Scl(int* m, double tmin[6][LIB + 1],
-	double per[6][LIB + 1], unsigned int correct[6][LIB]);
-
-void printGenFormScl(int* m, double tmin[6][LIB + 1], DWORD task[6][LIB + 1]);
-void printGenFormShr(int* m, double tmin[6][LIB + 1], DWORD task[6][LIB + 1]);
-
-void printAll_SclwNAF(int* m, double tmin[6][7],
-	double per[6][7], unsigned int correct[6][7]);
-
-void printBinOption(int*m, double tmin[6][3], double per[6][3], unsigned int corr[6][3]);
-void printBinOption(int*m, Result res[6]);
+void printBinOption(int *m, Result res[NUM_OF_EC + 1]);
 
 #endif
