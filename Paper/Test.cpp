@@ -99,7 +99,7 @@ void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 		ShrDuration(k, P, R1, &plShrJSF2, ShamirMul_JSF2, res.t[1]);
 		res.c[1] += epoint2_comp(R1, R);
 
-		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF1, res.t[2]);
+		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[2]);
 		res.c[2] += epoint2_comp(R1, R);
 
 		//ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[0]);
@@ -147,7 +147,7 @@ void Test(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 		//ShrDuration(k, P, R1, ShamirMul_JSF, res.t[1]);
 		//res.c[1] += epoint2_comp(R1, R);
 
-		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF1, res.t[2]);
+		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[2]);
 		res.c[2] += epoint2_comp(R1, R);
 
 		//ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[0]);
