@@ -24,8 +24,8 @@ using namespace std;
 #define TESTSHR 12
 #define TESTwNAF 13
 #define TESTGF	14
-#define TESTBIN	1000
-#define TEST	5000
+#define TESTBIN	100
+#define TEST	10
 
 #define SclBin	0
 #define ShrBin	2
@@ -48,16 +48,21 @@ struct Result {
 
 
 void TestBin(csprng &Rng, pepoint P, big n, Result &res);
-
 /*
  * Compare single scalar multiplication via shamir method
  * (as 100%, includes shamir decomposit and double scalar mul.)
  * and it's sub-functions.
  */
 void TestBin1(csprng &Rng, pepoint P, big n, Result &res);
-
 void TestSclBin(csprng &Rng, pepoint P, big n, Result &res);
 
+////////////////////////////////////////////////////////////////////////////
+//JSF
+void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg);
+
+
+
+////////////////////////////////////////////////////////////////////////////
 void Test(csprng &Rng, pepoint P, big n, Result &res, string &msg);
 
 

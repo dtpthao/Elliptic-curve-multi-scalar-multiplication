@@ -78,6 +78,51 @@ void TestSclBin(csprng &Rng, pepoint P, big n, Result &res)
 //	mirkill(k);
 //}
 
+void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg)
+{
+	pepoint R = epoint_init(),
+		R1 = epoint_init();
+	big k = mirvar(1);
+	PointList plShrJSF2(9);
+	PointList plShrJSF(9);
+
+	for (int i = 0; i < TEST; i++) {
+		strong_bigrand(&Rng, n, k);
+
+		if (k->len == 0 || (k->len == 1 && k->w[0] == 1)) {
+			i--;
+			continue;
+		}
+
+		SclDuration(k, P, R, ecurve2_mult, res.t[LIB]);
+
+		ShrDuration(k, P, R1, &plShrJSF2, ShamirMul_JSF2, res.t[1]);
+		res.c[1] += epoint2_comp(R1, R);
+
+		ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF1, res.t[2]);
+		res.c[2] += epoint2_comp(R1, R);
+
+		//ShrDuration(k, P, R1, &plShrJSF, ShamirMul_JSF, res.t[0]);
+		//res.c[0] += epoint2_comp(R1, R);
+
+		/*ShrDuration(k, P, R1, ShamirMul_JSF_origin, res.t[0]);
+		res.c[0] += epoint2_comp(R1, R);*/
+
+		SclDuration(k, P, R1, ScalarMul_Bin_L2R, res.t[0]);
+		res.c[0] += epoint2_comp(R1, R);
+	}
+	msg = "\t\tScalarBin	ShamirJSF2	ShamirJSF1	 Lib";
+	for (int i = 0; i <= LIB; i++) {
+		res.t[i] /= TESTBIN;
+		res.p[i] = (res.t[i] / res.t[0]) * 100;
+	}
+
+	plShrJSF.Destructor();
+	plShrJSF2.Destructor();
+	epoint_free(R); epoint_free(R1);
+	mirkill(k);
+}
+
 void Test(csprng &Rng, pepoint P, big n, Result &res, string &msg)
 {
 	pepoint R = epoint_init(),

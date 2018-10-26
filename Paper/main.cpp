@@ -43,11 +43,15 @@ int main()
 	
 	for (int i = 0; i < NUM_OF_EC; i++) {
 		m[i] = EC[i].m;
+		/*printf("%d\n%d\n\t%s\n%d %d %d %d %d\n%d\n\t%s\n%d\n\t%s\n%d\n\t%s\n\n",
+			EC[i].a, len, EC[i].b, EC[i].m, EC[i].k1, EC[i].k2,
+			EC[i].k3, EC[i].h, len, EC[i].n, len, EC[i].Gx, len, EC[i].Gy);*/
 		//GetConstainsEC(EC, m[i]);
 		if (!GenEC(EC[i], a, b, P, x, y, n)) 
 			return 1;
 		//TestBin(Rng, P, n, testBin[i]);
 		//TestSclBin(Rng, P, n, testBin[i]);
+		//TestJSF(Rng, P, n, testBin[i], msg);
 		Test(Rng, P, n, testBin[i], msg);
 		//TestShrMul_Bin(Rng, P, n, msg);
 	}
