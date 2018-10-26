@@ -17,24 +17,6 @@ void ScalarMul_Bin_L2R(big k, pepoint P, pepoint R)
 	}
 }
 
-void ScalarMul_Bin_R2L(big k, pepoint P, pepoint R)
-{
-	unsigned int len, i = 31;
-	pepoint D = epoint_init();
-	epoint2_copy(P, D);
-	epoint_set(0, 0, 1, R);
-	len = k->w[k->len - 1];
-	while (!(len & (1 << i))) i--;
-	len = (k->len << 5) - (31 - i);
-	for (i = 0; i < len; i++) {
-		if (k->w[i >> 5] & (1 << i)) {
-			ecurve2_add(D, R);
-		}
-		ecurve2_double(D);
-	}
-	epoint_free(D);
-}
-
 inline void PreMul_Bin(pepoint P, pepoint Q, pepoint *plist)
 {
 	epoint2_copy(P, plist[1]);
@@ -44,7 +26,8 @@ inline void PreMul_Bin(pepoint P, pepoint Q, pepoint *plist)
 	epoint2_norm(plist[3]);
 }
 
-void ShamirMul_Bin_ptr(PL *shrBin, big a, pepoint P, big b, pepoint Q, pepoint R)
+void ShamirMul_Bin_ptr(PL *shrBin, big a, 
+	pepoint P, big b, pepoint Q, pepoint R)					//in use
 {
 	int bita, bitb, i, j = 0, index;
 	DWORD shift = 1, lastw, a1, b1;
@@ -57,7 +40,7 @@ void ShamirMul_Bin_ptr(PL *shrBin, big a, pepoint P, big b, pepoint Q, pepoint R
 	epoint_set(0, 0, 1, R);
 	if (j != 1) {
 		bita = (a->w[i] >> --j) & 1;
-		bitb = (b->w[i] >> (j - 1)) & 2;	/** !!!!!!! j can be 0 **/
+		bitb = (b->w[i] >> (j - 1)) & 2;	/** !!! j can be 0 ==>> fixed **/
 		index = bita + bitb;
 	}
 	else {
@@ -165,6 +148,68 @@ void TestShrMul_Bin(csprng &Rng, pepoint P, big n, std::string &msg) {
 	epoint_free(R1); epoint_free(R2);
 }
 
+
+/*************************************************************************************************/
+/**______________________________The Very First Option__________________________________________**/
+/**                                                                                             **/
+void ScalarMul_Bin_R2L(big k, pepoint P, pepoint R)
+{
+	unsigned int len, i = 31;
+	pepoint D = epoint_init();
+	epoint2_copy(P, D);
+	epoint_set(0, 0, 1, R);
+	len = k->w[k->len - 1];
+	while (!(len & (1 << i))) i--;
+	len = (k->len << 5) - (31 - i);
+	for (i = 0; i < len; i++) {
+		if (k->w[i >> 5] & (1 << i)) {
+			ecurve2_add(D, R);
+		}
+		ecurve2_double(D);
+	}
+	epoint_free(D);
+}
+
+void PreMul_Bin_old(pepoint P, pepoint Q, pepoint *plist)
+{
+	for (int i = 0; i < 4; i++) {
+		plist[i] = epoint_init();
+	}
+	epoint2_set(0, 0, 1, plist[0]);
+	epoint2_copy(P, plist[1]);
+	epoint2_copy(Q, plist[2]);
+	epoint2_copy(P, plist[3]);
+	ecurve2_add(Q, plist[3]);
+}
+
+void ShamirMul_Bin_old(big a, pepoint P, big b, pepoint Q, pepoint R)
+{
+	pepoint plist[4];
+	int bita, bitb, i, j = 0;
+	DWORD shift = 1, lastw;
+	lastw = (compare(a, b) >= 0) ? 
+		a->w[a->len - 1] : b->w[b->len - 1];
+	while (lastw >> j && j != 31) {
+		j++;
+	}
+	PreMul_Bin_old(P, Q, plist);
+	epoint_set(0, 0, 1, R);
+	i = (lastw == a->w[a->len - 1]) ? a->len - 1 : b->len - 1;
+	for (shift <<= j; i >= 0; i--, shift = 0x80000000, j = 31) {
+		while (shift) {
+			bita = (a->w[i] & shift) >> j;
+			bitb = (b->w[i] & shift) >> j;
+			ecurve2_add(R, R);
+			ecurve2_add(plist[(bitb << 1) + bita], R);
+			shift >>= 1;
+			j--;
+		}
+	}
+	for (int i = 0; i < 4; i++) epoint_free(plist[i]);
+}
+
+/**_____________________________End "The very First Option"_____________________________________**/
+/*************************************************************************************************/
 
 
 //WORD GetBin2(big k, char*Bit)
