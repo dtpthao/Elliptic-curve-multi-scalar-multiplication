@@ -38,7 +38,7 @@ void ShamirMul(big k, pepoint P, pepoint R, PL *opt,
 
 	len = k->w[k->len - 1];
 	while (!(len & (1 << i))) i--;
-	len = (k->len << 4) - ((31 - i) >> 1) - 1;
+	len = (k->len << 4) - ((31 - i) >> 1) - !(i & 1);
 
 	sftbit(k, 0 - len, b);
 	a->len = len >> 5;
@@ -62,7 +62,7 @@ void ShamirDecomposit(big k, pepoint P, big a, pepoint Q, big b)
 
 	len = k->w[k->len - 1];
 	while (!(len & (1 << i))) i--;
-	len = (k->len << 4) - ((31 - i) >> 1) - 1;
+	len = (k->len << 4) - ((31 - i) >> 1) - !(i & 1);
 
 	sftbit(k, 0-len, b);
 	a->len = len >> 5;
@@ -83,7 +83,7 @@ void ShamirDecomposit(big k, big a, big b)
 	DWORD len, i = 31;
 	big tmp2l = mirvar(1);
 	while (!(k->w[k->len - 1] & (1 << i))) i--;
-	len = (k->len << 4) - ((31 - i) >> 1);
+	len = (k->len << 4) - ((31 - i) >> 1) - !(i & 1);
 	sftbit(tmp2l, len, tmp2l);
 	copy(k, a);
 	divide(a, tmp2l, b);

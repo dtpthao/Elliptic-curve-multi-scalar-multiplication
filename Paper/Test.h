@@ -25,7 +25,7 @@ using namespace std;
 #define TESTwNAF 13
 #define TESTGF	14
 #define TESTBIN	100
-#define TEST	10
+#define TEST	1000
 
 #define SclBin	0
 #define ShrBin	2

@@ -6,7 +6,7 @@ void ScalarMul_Bin_L2R(big k, pepoint P, pepoint R)
 	epoint_set(0, 0, 1, R);
 
 	len = k->w[k->len - 1];
-	while (!(len & (1 << i))) i--;
+	while (len && !(len & (1 << i))) i--;
 	len = (k->len << 5) - (31 - i);
 	epoint2_copy(P, R);
 	for (int j = len - 2; j >= 0; j--) {
