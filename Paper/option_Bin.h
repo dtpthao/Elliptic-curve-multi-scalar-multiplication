@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
-#include "ShamirMul.h"
+#include "shr_decomposit.h"
 #include "Duration.h"
 extern "C" {
 #include "miracl.h"

@@ -10,7 +10,7 @@ using namespace std;
 #include "Ellipse.h"
 #include "Duration.h"
 
-#include "ShamirMul.h"
+#include "shr_decomposit.h"
 #include "option_Bin.h"
 //#include "option_NAF.h"
 //#include "option_wNAF.h"

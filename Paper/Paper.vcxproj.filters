@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\bin">
+      <UniqueIdentifier>{2c924c67-38bf-4993-bab0-ad5cfa7ee878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Duration.cpp">
@@ -27,22 +30,22 @@
     <ClCompile Include="PrintTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShamirMul.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mrec2m.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="option_Bin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="option_JSF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="option_NAF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="option_Bin.cpp">
+      <Filter>Source Files\bin</Filter>
+    </ClCompile>
+    <ClCompile Include="shr_decomposit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -64,9 +67,6 @@
     <ClInclude Include="PrintTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ShamirMul.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -74,6 +74,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Option_JSF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shr_decomposit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

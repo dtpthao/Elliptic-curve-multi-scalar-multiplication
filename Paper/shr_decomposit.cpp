@@ -1,4 +1,4 @@
-#include "ShamirMul.h"
+#include "shr_decomposit.h"
 #include <iostream>
 
 //void ShamirMul(big k, pepoint P, pepoint R, PL *opt,

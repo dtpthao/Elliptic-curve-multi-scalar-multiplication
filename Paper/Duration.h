@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <time.h>
 #include "Ellipse.h"
-#include "ShamirMul.h"
+#include "shr_decomposit.h"
 
 typedef epoint* pepoint;
 
