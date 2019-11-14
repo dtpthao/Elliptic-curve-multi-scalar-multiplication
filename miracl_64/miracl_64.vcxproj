@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{0B52AD86-9AF4-42D4-81C1-58F3FF7E452F}</ProjectGuid>
-    <RootNamespace>Paper</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{77C43920-5ECE-4FFE-9B03-801B938F5A65}</ProjectGuid>
+    <RootNamespace>miracl64</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -77,12 +77,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>ms32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <Link>
-      <IgnoreSpecificDefaultLibraries>LIBCMT.lib</IgnoreSpecificDefaultLibraries>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -90,7 +84,6 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -101,13 +94,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -118,41 +108,68 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <IgnoreSpecificDefaultLibraries>LIBCMT.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>ms32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Duration.cpp" />
-    <ClCompile Include="Ellipse.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mraes.c" />
+    <ClCompile Include="mralloc.c" />
+    <ClCompile Include="mrarth0.c" />
+    <ClCompile Include="mrarth1.c" />
+    <ClCompile Include="mrarth2.c" />
+    <ClCompile Include="mrarth3.c" />
+    <ClCompile Include="mrbits.c" />
+    <ClCompile Include="mrbrick.c" />
+    <ClCompile Include="mrbuild.c" />
+    <ClCompile Include="mrcore.c" />
+    <ClCompile Include="mrcrt.c" />
+    <ClCompile Include="mrcurve.c" />
+    <ClCompile Include="mrdouble.c" />
+    <ClCompile Include="mrebrick.c" />
     <ClCompile Include="mrec2m.c" />
-    <ClCompile Include="option_Bin.cpp" />
-    <ClCompile Include="option_Bin2.cpp" />
-    <ClCompile Include="option_Bin3.cpp" />
-    <ClCompile Include="option_JSF.cpp" />
-    <ClCompile Include="option_NAF.cpp" />
-    <ClCompile Include="PrintTest.cpp" />
-    <ClCompile Include="shr_decomposit.cpp" />
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="mrecn2.c" />
+    <ClCompile Include="mrfast.c" />
+    <ClCompile Include="mrflash.c" />
+    <ClCompile Include="mrflsh1.c" />
+    <ClCompile Include="mrflsh2.c" />
+    <ClCompile Include="mrflsh3.c" />
+    <ClCompile Include="mrflsh4.c" />
+    <ClCompile Include="mrfpe.c" />
+    <ClCompile Include="mrfrnd.c" />
+    <ClCompile Include="mrgcd.c" />
+    <ClCompile Include="mrgcm.c" />
+    <ClCompile Include="mrgf2m.c" />
+    <ClCompile Include="mrio1.c" />
+    <ClCompile Include="mrio2.c" />
+    <ClCompile Include="mrjack.c" />
+    <ClCompile Include="mrlucas.c" />
+    <ClCompile Include="mrmonty.c" />
+    <ClCompile Include="mrmuldv.c" />
+    <ClCompile Include="mrpi.c" />
+    <ClCompile Include="mrpower.c" />
+    <ClCompile Include="mrprime.c" />
+    <ClCompile Include="mrrand.c" />
+    <ClCompile Include="mrround.c" />
+    <ClCompile Include="mrscrt.c" />
+    <ClCompile Include="mrsha3.c" />
+    <ClCompile Include="mrshs.c" />
+    <ClCompile Include="mrshs256.c" />
+    <ClCompile Include="mrshs512.c" />
+    <ClCompile Include="mrsmall.c" />
+    <ClCompile Include="mrsroot.c" />
+    <ClCompile Include="mrstrong.c" />
+    <ClCompile Include="mrxgcd.c" />
+    <ClCompile Include="mrzzn2.c" />
+    <ClCompile Include="mrzzn2b.c" />
+    <ClCompile Include="mrzzn3.c" />
+    <ClCompile Include="mrzzn4.c" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ms32.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Duration.h" />
-    <ClInclude Include="Ellipse.h" />
     <ClInclude Include="miracl.h" />
-    <ClInclude Include="option_Bin.h" />
-    <ClInclude Include="Option_JSF.h" />
-    <ClInclude Include="PrintTest.h" />
-    <ClInclude Include="shr_decomposit.h" />
-    <ClInclude Include="Test.h" />
+    <ClInclude Include="mirdef.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

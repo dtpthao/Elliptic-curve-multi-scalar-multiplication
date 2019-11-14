@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="mrarth0.c" />
+    <ClCompile Include="mrarth1.c" />
+    <ClCompile Include="mrarth2.c" />
+    <ClCompile Include="mrarth3.c" />
+    <ClCompile Include="mrbits.c" />
+    <ClCompile Include="mrbrick.c" />
+    <ClCompile Include="mrbuild.c" />
+    <ClCompile Include="mrcore.c" />
+    <ClCompile Include="mrcrt.c" />
+    <ClCompile Include="mrcurve.c" />
+    <ClCompile Include="mrdouble.c" />
+    <ClCompile Include="mrebrick.c" />
+    <ClCompile Include="mrec2m.c" />
+    <ClCompile Include="mrecn2.c" />
+    <ClCompile Include="mrfast.c" />
+    <ClCompile Include="mrflash.c" />
+    <ClCompile Include="mrflsh1.c" />
+    <ClCompile Include="mrflsh2.c" />
+    <ClCompile Include="mrflsh3.c" />
+    <ClCompile Include="mrflsh4.c" />
+    <ClCompile Include="mrfpe.c" />
+    <ClCompile Include="mrfrnd.c" />
+    <ClCompile Include="mrgcd.c" />
+    <ClCompile Include="mrgcm.c" />
+    <ClCompile Include="mrgf2m.c" />
+    <ClCompile Include="mrio1.c" />
+    <ClCompile Include="mrio2.c" />
+    <ClCompile Include="mrjack.c" />
+    <ClCompile Include="mrlucas.c" />
+    <ClCompile Include="mrmonty.c" />
+    <ClCompile Include="mrmuldv.c" />
+    <ClCompile Include="mrpi.c" />
+    <ClCompile Include="mrpower.c" />
+    <ClCompile Include="mrprime.c" />
+    <ClCompile Include="mrrand.c" />
+    <ClCompile Include="mrround.c" />
+    <ClCompile Include="mrscrt.c" />
+    <ClCompile Include="mrsha3.c" />
+    <ClCompile Include="mrshs.c" />
+    <ClCompile Include="mrshs256.c" />
+    <ClCompile Include="mrshs512.c" />
+    <ClCompile Include="mrsmall.c" />
+    <ClCompile Include="mrsroot.c" />
+    <ClCompile Include="mrstrong.c" />
+    <ClCompile Include="mrxgcd.c" />
+    <ClCompile Include="mrzzn2.c" />
+    <ClCompile Include="mrzzn2b.c" />
+    <ClCompile Include="mrzzn3.c" />
+    <ClCompile Include="mrzzn4.c" />
+    <ClCompile Include="mraes.c" />
+    <ClCompile Include="mralloc.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mirdef.h" />
+    <ClInclude Include="miracl.h" />
+  </ItemGroup>
+</Project>

@@ -89,3 +89,16 @@ void ShamirDecomposit(big k, big a, big b)
 	divide(a, tmp2l, b);
 	mirkill(tmp2l);
 }
+
+void ShamirDecomposit3(big k, big a, big b)
+{
+	if (k->len == 0) return;
+	DWORD len, i = 31;
+	big tmp2l = mirvar(1);
+	while (!(k->w[k->len - 1] & (1 << i))) i--;
+	len = (k->len << 4) - ((31 - i) >> 1) - !(i & 1);
+	sftbit(tmp2l, len, tmp2l);
+	copy(k, a);
+	divide(a, tmp2l, b);
+	mirkill(tmp2l);
+}

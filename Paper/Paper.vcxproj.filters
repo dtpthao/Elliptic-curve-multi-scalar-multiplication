@@ -48,6 +48,12 @@
     <ClCompile Include="shr_decomposit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="option_Bin3.cpp">
+      <Filter>Source Files\bin</Filter>
+    </ClCompile>
+    <ClCompile Include="option_Bin2.cpp">
+      <Filter>Source Files\bin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ms32.lib">
