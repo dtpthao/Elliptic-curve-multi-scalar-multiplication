@@ -1,13 +1,8 @@
 #ifndef _OPTION_BIN_H
 #define _OPTION_BIN_H
 #include <iostream>
-#include <Windows.h>
-#include <string>
-#include "shr_decomposit.h"
 #include "Duration.h"
-extern "C" {
-#include "miracl.h"
-}
+
 typedef epoint* pepoint;
 
 void ScalarMul_Bin_L2R(big k, pepoint P, pepoint R);

@@ -138,7 +138,7 @@
     <ClCompile Include="option_JSF.cpp" />
     <ClCompile Include="option_NAF.cpp" />
     <ClCompile Include="PrintTest.cpp" />
-    <ClCompile Include="shr_decomposit.cpp" />
+    <ClCompile Include="shr_decomp.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +151,7 @@
     <ClInclude Include="option_Bin.h" />
     <ClInclude Include="Option_JSF.h" />
     <ClInclude Include="PrintTest.h" />
-    <ClInclude Include="shr_decomposit.h" />
+    <ClInclude Include="shr_decomp.h" />
     <ClInclude Include="Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

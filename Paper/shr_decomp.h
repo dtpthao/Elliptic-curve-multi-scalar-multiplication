@@ -1,5 +1,5 @@
-#ifndef _SHR_DECOMPOSIT_H
-#define _SHR_DECOMPOSIT_H
+#ifndef _SHR_DECOMP_H
+#define _SHR_DECOMP_H
 
 #include "Ellipse.h"
 
