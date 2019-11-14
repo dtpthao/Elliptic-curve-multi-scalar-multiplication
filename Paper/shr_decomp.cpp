@@ -56,7 +56,7 @@ void ShamirMul(big k, pepoint P, pepoint R, PL *opt,
 	mirkill(a); mirkill(b); mirkill(tmp2l);
 }
 
-void ShamirDecomposit(big k, pepoint P, big a, pepoint Q, big b) 
+void ShamirDecompose(big k, pepoint P, big a, pepoint Q, big b) 
 {
 	DWORD len, i = 31, rlen;
 
@@ -77,7 +77,7 @@ void ShamirDecomposit(big k, pepoint P, big a, pepoint Q, big b)
 	epoint2_norm(Q);
 }
 
-void ShamirDecomposit(big k, big a, big b) 
+void ShamirDecompose(big k, big a, big b) 
 {
 	if (k->len == 0) return;
 	DWORD len, i = 31;
@@ -90,7 +90,7 @@ void ShamirDecomposit(big k, big a, big b)
 	mirkill(tmp2l);
 }
 
-void ShamirDecomposit3(big k, big k1, big k2, big k3, 
+void ShamirDecompose3(big k, big k1, big k2, big k3, 
 	pepoint P, pepoint P1, pepoint P2, pepoint P3)
 {
 	if (k->len == 0) return;

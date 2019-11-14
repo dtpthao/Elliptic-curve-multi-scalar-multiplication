@@ -15,15 +15,18 @@ void ShamirMul(big k, pepoint P, pepoint R, PL *opt,
 Compute a, b and Q
 (Copied from function above but no computing R = aP + bQ)
 */
-void ShamirDecomposit(big k, pepoint P, big a, pepoint Q, big b);
-void ShamirDecomposit1(big k, pepoint P, big a, pepoint Q, big b);
+void ShamirDecompose(big k, pepoint P, big a, pepoint Q, big b);
 
 /*
 Compute a, b
 (Copied from function above but no computing Q and R)
 (Used in deleted test but I keep it as it doesn't matter anyway)
 */
-void ShamirDecomposit(big k, big a, big b);
+void ShamirDecompose(big k, big a, big b);
+
+
+void ShamirDecompose3(big k, big k1, big k2, big k3,
+	pepoint P, pepoint P1, pepoint P2, pepoint P3);
 
 #endif
 

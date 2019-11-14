@@ -104,7 +104,7 @@ void TestShrMul_Bin(csprng &Rng, pepoint P, big n, std::string &msg) {
 
 		/*strong_bigdig(&Rng, 100, 10, a);
 		strong_bigdig(&Rng, 100, 10, b);*/
-		ShamirDecomposit(k, P, a, Q, b);
+		ShamirDecompose(k, P, a, Q, b);
 
 		ShamirMul_Bin_ptr(&shrBin, a, P, b, Q, R);
 		ecurve2_mult2(a, P, b, Q, R1);

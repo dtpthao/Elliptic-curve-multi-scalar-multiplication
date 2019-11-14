@@ -91,7 +91,7 @@ void ShrDuration(big k, pepoint P, pepoint R,
 	stopWatch timer;
 	for (int i = 0; i < REPEAT; i++) {
 		startTimer(&timer);
-		ShamirDecomposit(k, P, a, Q, b);
+		ShamirDecompose(k, P, a, Q, b);
 		(*func) (a, P, b, Q, R);
 		stopTimer(&timer);
 
@@ -132,7 +132,7 @@ void ShrDecompDuration(big k, pepoint P, big a, pepoint Q, big b, double &t)
 
 	for (int i = 0; i < REPEAT; i++) {
 		startTimer(&timer);
-		ShamirDecomposit(k, P, a, Q, b);
+		ShamirDecompose(k, P, a, Q, b);
 		stopTimer(&timer);
 		dur = getTickCount(&timer);
 		min = (min < dur) ? min : dur;

@@ -31,7 +31,7 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	pepoint P1, pepoint P2, pepoint P3, pepoint R)
 {
 	int tmp1, tmp2, tmp3, i, j = 0, index;
-	DWORD shift = 1, w1, w2, w3;
+	DWORD w1, w2, w3;
 
 	i = k3->len - 1;
 	tmp1 = k3->w[i];
@@ -59,30 +59,55 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 		if (index)
 			ecurve2_padd(shrBin->plist[index], R);
 	}
-	//if (j != 1) {
-	//	bit1 = (a->w[i] >> --j) & 1;
-	//	bit2 = (b->w[i] >> (j - 1)) & 2;	/** !!! j can be 0 ==>> fixed **/
-	//	index = bita + bitb;
-	//}
-	//else {
-	//	index = (a->w[i] & 1) + ((b->w[i] & 1) << 1);
-	//	i--; j = 32;
-	//}
-	//epoint2_copy(shrBin->plist[index], R);
-	//for (--j; i >= 0; i--, j = 31) {
-	//	a1 = a->w[i];
-	//	b1 = b->w[i];
-	//	while (j) {
-	//		bita = (a1 >> j) & 1;
-	//		bitb = (b1 >> (j - 1)) & 2;
-	//		ecurve2_double(R);
-	//		index = bitb + bita;
-	//		if (index)
-	//			ecurve2_padd(shrBin->plist[index], R);
-	//		j--;
+}
+
+
+void test_bin3(csprng &Rng, pepoint P, big n, string msg) 
+{
+	big k1 = mirvar(0),
+		k2 = mirvar(0),
+		k3 = mirvar(0),
+		k = mirvar(0);
+	pepoint P1 = epoint_init(),
+		P2 = epoint_init(),
+		P3 = epoint_init(),
+		R = epoint_init(),
+		R1 = epoint_init(),
+		R2 = epoint_init();
+	msg = "Test ShrMul_Bin\n";
+	PL shrBin(8);
+	//ecurve2_mult(a, P, Q);
+	int count = 0, cmp = 0;
+	//for (int i = 0; i < 1000; i++) {
+	//	//strong_bigdig(&Rng, 16, 16, k);
+	//	//std::cout << "k: "; cotnum(k, stdout);
+	//	strong_bigrand(&Rng, n, k);
+
+	//	/*strong_bigdig(&Rng, 100, 10, a);
+	//	strong_bigdig(&Rng, 100, 10, b);*/
+	//	ShamirDecomposit(k, P, a, Q, b);
+
+	//	ShamirMul_Bin_ptr(&shrBin, a, P, b, Q, R);
+	//	ecurve2_mult2(a, P, b, Q, R1);
+	//	//ecurve2_mult(k, P, R2);
+	//	//std::cout << "R: "; cotnumEp(R);
+	//	//std::cout << "R1: "; cotnumEp(R1);
+	//	//std::cout << "R2: "; cotnumEp(R2);
+	//	cmp = epoint2_comp(R1, R);
+	//	if (!cmp) {
+	//		std::cout << "k: "; cotnum(k, stdout);
+	//		std::cout << "a: "; cotnum(a, stdout);
+	//		std::cout << "b: "; cotnum(b, stdout);
+	//		std::cout << "R: "; cotnumEp(R);
+	//		std::cout << "R1: "; cotnumEp(R1);
+	//		//std::cout << "R2: "; cotnumEp(R2);
+	//		ShamirMul_Bin_ptr(&shrBin, a, P, b, Q, R);
+	//		break;
 	//	}
-	//	index = (a1 & 1) + ((b1 & 1) << 1);
-	//	ecurve2_double(R);
-	//	if (index) ecurve2_padd(shrBin->plist[index], R);
+	//	count += cmp;
 	//}
+	//std::cout << "Cmp: " << count << std::endl;
+	//mirkill(a); mirkill(b); mirkill(k);
+	//epoint_free(Q); epoint_free(R);
+	//epoint_free(R1); epoint_free(R2);
 }

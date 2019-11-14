@@ -1,6 +1,6 @@
 #ifndef _OPTION_BIN_H
 #define _OPTION_BIN_H
-#include <iostream>
+
 #include "Duration.h"
 
 typedef epoint* pepoint;
