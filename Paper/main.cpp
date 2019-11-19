@@ -25,6 +25,42 @@ int main()
 	pepoint P = epoint_init();
 	big k = mirvar(1);
 	int m[NUM_OF_EC + 1] = { 0 };// { 163, 233, 283, 409, 571, 0 };
+
+	Result testBin[NUM_OF_EC];
+	string msg;
+	int len = 0;
+	readFile("DSTU4145TablePrameters.txt", EC);
+
+	for (int i = 0; i < 1/*NUM_OF_EC*/; i++) {
+		m[i] = EC[i].m;
+		if (!GenEC(EC[i], a, b, P, x, y, n))
+			return 1;
+		test_bin3(Rng, P, n, msg);
+	}
+	cout << endl << msg << endl;
+
+	cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
+
+	epoint_free(P);
+	mirkill(a); mirkill(b); mirkill(k);
+	mirexit();
+	system("pause");
+	return 0;
+}
+
+int old_main()
+{
+	srand(time(NULL));
+	miracl *M = mirsys(100, 0);
+	M->IOBASE = 16;
+	csprng Rng; InitStrongRNG(&Rng);
+	big a = mirvar(1), x = mirvar(1), y = mirvar(1), n = mirvar(1);
+	big b = mirvar(0xe);
+	EC_CONSTANTS_F2m_POLY EC[NUM_OF_EC] = {};
+
+	pepoint P = epoint_init();
+	big k = mirvar(1);
+	int m[NUM_OF_EC + 1] = { 0 };// { 163, 233, 283, 409, 571, 0 };
 	
 	Result testBin[NUM_OF_EC];
 	string msg;

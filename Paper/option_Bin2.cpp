@@ -21,6 +21,12 @@ void ShamirMul_Bin_ptr(PL *shrBin, big a,
 
 	PreMul_Bin(P, Q, shrBin->plist);
 	epoint_set(0, 0, 1, R);
+
+	/* *
+	 * ecurve2_padd doesn't work with point at infinity
+	 * therefore, R must be set with an initial value 
+	 * which is not "point at infinity" before the loop
+	 * */
 	if (j != 1) {
 		bita = (a->w[i] >> --j) & 1;
 		bitb = (b->w[i] >> (j - 1)) & 2;	/** !!! j can be 0 ==>> fixed **/

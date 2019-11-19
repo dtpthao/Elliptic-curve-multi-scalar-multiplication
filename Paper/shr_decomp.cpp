@@ -106,10 +106,12 @@ void ShamirDecompose3(big k, big k1, big k2, big k3,
 	divide(k2, tmp, k3);
 
 	epoint2_copy(P, P1);
+
 	epoint2_copy(P, P2);
 	for (i = 0; i < len; i++) {
 		ecurve2_double(P2);
 	}
+
 	epoint2_copy(P2, P3);
 	for (i = 0; i < len; i++) {
 		ecurve2_double(P3);
