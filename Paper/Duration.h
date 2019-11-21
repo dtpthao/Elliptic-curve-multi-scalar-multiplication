@@ -4,8 +4,6 @@
 #include "Ellipse.h"
 #include "shr_decomp.h"
 
-typedef epoint* pepoint;
-
 typedef struct {
 	LARGE_INTEGER start;
 	LARGE_INTEGER stop;

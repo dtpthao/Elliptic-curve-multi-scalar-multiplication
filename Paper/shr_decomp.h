@@ -28,5 +28,7 @@ void ShamirDecompose(big k, big a, big b);
 void ShamirDecompose3(big k, big k1, big k2, big k3,
 	pepoint P, pepoint P1, pepoint P2, pepoint P3);
 
+void ShamirDecompose_n(int n, big k, big *kx, pepoint P, pepoint *Px);
+
 #endif
 

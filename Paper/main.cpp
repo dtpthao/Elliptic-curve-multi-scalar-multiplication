@@ -35,11 +35,12 @@ int main()
 		m[i] = EC[i].m;
 		if (!GenEC(EC[i], a, b, P, x, y, n))
 			return 1;
-		test_bin3(Rng, P, n, msg);
+		//test_bin3(Rng, P, n, msg);
+		test_bin_n(3, Rng, P, n, msg);
 	}
 	cout << endl << msg << endl;
 
-	cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
+	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
 
 	epoint_free(P);
 	mirkill(a); mirkill(b); mirkill(k);

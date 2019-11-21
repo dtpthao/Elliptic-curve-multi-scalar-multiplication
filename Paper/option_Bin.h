@@ -18,6 +18,9 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 void test_bin3(csprng &Rng, pepoint P, big n, string msg);
 
 
+void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg);
+
+
 /*******************************************************************************/
 /**_________________________The Very First Option_____________________________**/
 /**                                                                           **/

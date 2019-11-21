@@ -64,18 +64,38 @@ void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg)
 	pepoint	R = epoint_init(),
 		R1 = epoint_init(),
 		R2 = epoint_init();
+
+	big k1 = mirvar(0),
+		k2 = mirvar(0),
+		k3 = mirvar(0);
+	pepoint P1 = epoint_init(),
+		P2 = epoint_init(),
+		P3 = epoint_init();
+
 	msg = "Test ShrMul_Bin\n";
 	PL shrBin(8);
 	//ecurve2_mult(a, P, Q);
 	int count = 0, cmp = 0;
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 1; i++) {
 		strong_bigrand(&Rng, n, k);
-		//ShamirDecompose_n(k, kx, P, Px);		// need to write this first
+		ShamirDecompose_n(d, k, kx, P, Px);
+		ShamirDecompose3(k, k1, k2, k3, P, P1, P2, P3);
+		std::cout << "k1: "; cotnum(kx[0], stdout);
+		std::cout << "k1: "; cotnum(k1, stdout);
+		std::cout << "k2: "; cotnum(kx[1], stdout);
+		std::cout << "k2: "; cotnum(k2, stdout);
+		std::cout << "k3: "; cotnum(kx[2], stdout);
+		std::cout << "k3: "; cotnum(k3, stdout);
+		std::cout << "P1: "; cotnumEp(Px[0]);
+		std::cout << "P1: "; cotnumEp(P1);
+		std::cout << "P2: "; cotnumEp(Px[1]);
+		std::cout << "P2: "; cotnumEp(P2);
+		std::cout << "P3: "; cotnumEp(Px[2]);
+		std::cout << "P3: "; cotnumEp(P3);
 
-		ShamirMul_Bin_n(d, &shrBin, kx, Px, R);
-		//ecurve2_mult2(a, P, b, Q, R1);
-		ecurve2_mult(k, P, R2);
-		cmp = epoint2_comp(R2, R);
+		//ShamirMul_Bin_n(d, &shrBin, kx, Px, R);
+		//ecurve2_mult(k, P, R2);
+		//cmp = epoint2_comp(R2, R);
 		count += cmp;
 	}
 	std::cout << "Cmp: " << count << std::endl;
