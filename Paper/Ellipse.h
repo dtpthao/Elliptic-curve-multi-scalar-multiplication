@@ -55,6 +55,7 @@ void readFile(const char *, EC_CONSTANTS_F2m_POLY[NUM_OF_EC]);	//get list of inp
 
 void readFile(const char *, EC_CONSTANTS_F2m_POLY &);
 
+// doesn't work with point at infinity
 BOOL ecurve2_padd(_MIPD_ epoint *p, epoint *pa); // internal add function of ms32.lib
 
 #endif

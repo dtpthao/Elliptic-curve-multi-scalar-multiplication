@@ -54,7 +54,7 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	tmp3 = ((k3->w[i] >> j) & 1) << 2;
 	index = tmp1 + tmp2 + tmp3;
 	epoint2_copy(shrBin->plist[index], R);
-	if (j == 1) {
+	if (j == 1) {   // it should be 0 here
 		i--; j = 32;
 	}
 	for (--j; i >= 0; i--, j = 31) {
