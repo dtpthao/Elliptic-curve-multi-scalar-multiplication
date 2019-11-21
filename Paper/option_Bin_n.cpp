@@ -2,7 +2,7 @@
 
 inline void PreMul_Bin_n(int n, pepoint *P, pepoint *plist)
 {
-	epoint2_copy(P[1], plist[1]);
+	epoint2_copy(P[0], plist[1]);
 
 	int idx;
 	for (int i = 1; i < n; i++) {
@@ -97,12 +97,12 @@ void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg)
 		//std::cout << "P3: "; cotnumEp(Px[2]);
 		//std::cout << "P3: "; cotnumEp(P3);
 
-		ShamirMul_Bin3_ptr(&shrBin2, k1, k2, k3, P1, P2, P3, R);
 		ShamirMul_Bin_n(d, &shrBin, kx, Px, R);
-		for (int i = 0; i < 8; i++) {
-			std::cout << "pl[" << i << "] :\n"; cotnumEp(shrBin2.plist[i]);
-			std::cout << "pl[" << i << "] :\n"; cotnumEp(shrBin.plist[i]);
-		}
+		ShamirMul_Bin3_ptr(&shrBin2, k1, k2, k3, P1, P2, P3, R);
+		//for (int i = 0; i < 8; i++) {
+		//	std::cout << "pl[" << i << "] :\n"; cotnumEp(shrBin2.plist[i]);
+		//	std::cout << "pl[" << i << "] :\n"; cotnumEp(shrBin.plist[i]);
+		//}
 		ecurve2_mult(k, P, R2);
 		//cmp = epoint2_comp(R2, R);
 		count += cmp;
