@@ -42,7 +42,6 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	while (tmp1 >> j && j != 32) j++;
 	
 	PreMul_Bin3(P1, P2, P3, shrBin->plist);
-	epoint_set(0, 0, 1, R);
 
 	/* *
 	* ecurve2_padd doesn't work with point at infinity
@@ -54,7 +53,7 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	tmp3 = ((k3->w[i] >> j) & 1) << 2;
 	index = tmp1 + tmp2 + tmp3;
 	epoint2_copy(shrBin->plist[index], R);
-	if (j == 1) {   // it should be 0 here
+	if (j == 0) {
 		i--; j = 32;
 	}
 	for (--j; i >= 0; i--, j = 31) {
@@ -96,7 +95,7 @@ void test_bin3(csprng &Rng, pepoint P, big n, string msg)
 	PL shrBin(8);
 	//ecurve2_mult(a, P, Q);
 	int count = 0, cmp = 0;
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 10000; i++) {
 		//strong_bigdig(&Rng, 4, 16, k);
 		//std::cout << "k: "; cotnum(k, stdout);
 		strong_bigrand(&Rng, n, k);
