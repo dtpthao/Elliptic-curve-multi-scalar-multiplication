@@ -54,6 +54,9 @@
     <ClCompile Include="shr_decomp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="option_Bin_n.cpp">
+      <Filter>Source Files\bin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ms32.lib">
