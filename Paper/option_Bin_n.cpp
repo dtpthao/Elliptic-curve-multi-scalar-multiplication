@@ -18,8 +18,7 @@ inline void PreMul_Bin_n(int n, pepoint *P, pepoint *plist)
 
 void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
 {
-	int i, j = 0, ii, index = 0, tmp;
-	int *bit = new int[n];
+	int i, j = 0, ii = 0, index = 0, tmp;
 	DWORD *w = new DWORD[n];
 
 	i = k[n - 1]->len - 1;
@@ -27,23 +26,17 @@ void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
 	while (tmp >> j && j != 32) j++;
 
 	PreMul_Bin_n(n, P, shrBin->plist);
-	epoint_set(0, 0, 1, R);
 
-	for (ii = 0; ii < n; ii++) {
-		bit[ii] = (k[ii]->w[i] >> j) & 1 << ii;
-		index += bit[ii];
-	}
+	for (; ii < n; ii++) index += (k[ii]->w[i] >> j) & 1 << ii;
+	if (j == 0) { i--; j = 32; }
 	epoint2_copy(shrBin->plist[index], R);
-	if (j == 0) {
-		i--; j = 32;
-	}
+
 	for (--j; i >= 0; i--, j = 31) {
 		for (ii = 0; ii < n; ii++) w[ii] = k[ii]->w[i];
 		while (j) {
 			index = (w[0] >> j) & 1;
 			for (ii = 1; ii < n; ii++) {
-				bit[ii] = (w[ii] >> j) & 1 << ii;
-				index += bit[ii];
+				index += (w[ii] >> j) & 1 << ii;
 			}
 			ecurve2_double(R);
 			if (index) ecurve2_padd(shrBin->plist[index], R);	// it should be also normalized, but I'll see later
@@ -57,5 +50,41 @@ void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
 		if (index) ecurve2_padd(shrBin->plist[index], R);
 		//cout << "R\n"; cotnumEp(R);
 	}
+}
+
+void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg)
+{
+	big *kx = new big[d];
+	pepoint *Px = new pepoint[d];
+	for (int i = 0; i < d; i++) {
+		kx[i] = mirvar(0);
+		Px[i] = epoint_init();
+	}
+	big k = mirvar(0);
+	pepoint	R = epoint_init(),
+		R1 = epoint_init(),
+		R2 = epoint_init();
+	msg = "Test ShrMul_Bin\n";
+	PL shrBin(8);
+	//ecurve2_mult(a, P, Q);
+	int count = 0, cmp = 0;
+	for (int i = 0; i < 1000; i++) {
+		strong_bigrand(&Rng, n, k);
+		//ShamirDecompose_n(k, kx, P, Px);		// need to write this first
+
+		ShamirMul_Bin_n(d, &shrBin, kx, Px, R);
+		//ecurve2_mult2(a, P, b, Q, R1);
+		ecurve2_mult(k, P, R2);
+		cmp = epoint2_comp(R2, R);
+		count += cmp;
+	}
+	std::cout << "Cmp: " << count << std::endl;
+	shrBin.Destructor();
+	for (int i = 0; i < d; i++) {
+		mirkill(kx[i]);
+		epoint_free(Px[i]);
+	}
+	mirkill(k);
+	epoint_free(R); epoint_free(R1); epoint_free(R2);
 }
 
