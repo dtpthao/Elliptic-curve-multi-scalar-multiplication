@@ -123,12 +123,13 @@ void readFile(const char *fileName, EC_CONSTANTS_F2m_POLY EC[NUM_OF_EC]) {
 		printf("File could not be opened\n");
 	}
 	else {
+		fseek(f, 0L, SEEK_SET);
 		for (int i = 0; i < NUM_OF_EC; i++) {
-			fscanf_s(f, "%d%d\n%[^\n]", &EC[i].a, &len, EC[i].b);
+			fscanf_s(f, "%d%d\n%[^\n]", &EC[i].a, &len, EC[i].b, _countof(EC[i].b));
 			fscanf_s(f, "%d%d%d%d%d", &EC[i].m, &EC[i].k1, &EC[i].k2, &EC[i].k3, &EC[i].h);
-			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].Gx);
-			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].Gy);
-			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].n);
+			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].Gx, _countof(EC[i].Gx));
+			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].Gy, _countof(EC[i].Gy));
+			fscanf_s(f, "%d\n%[^\n]", &len, EC[i].n, _countof(EC[i].n));
 		}
 		/*for (int i = 0; i < NUM_OF_EC; i++) {
 			printf("%d\n%d\n\t%s\n%d %d %d %d %d\n%d\n\t%s\n%d\n\t%s\n%d\n\t%s\n\n",

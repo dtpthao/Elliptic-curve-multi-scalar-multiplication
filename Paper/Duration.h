@@ -1,10 +1,8 @@
 #ifndef _COUNT_TIME_H
 #define _COUNT_TIME_H
 
-#include <Windows.h>
-#include <time.h>
 #include "Ellipse.h"
-#include "shr_decomposit.h"
+#include "shr_decomp.h"
 
 typedef epoint* pepoint;
 

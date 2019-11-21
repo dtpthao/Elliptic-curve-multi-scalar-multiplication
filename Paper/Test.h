@@ -1,16 +1,10 @@
 #ifndef _TEST_H
 #define _TEST_H
 
-#include <iostream>
 #include <math.h>
 #include <iomanip>
 #include <string>
-using namespace std;
 
-#include "Ellipse.h"
-#include "Duration.h"
-
-#include "shr_decomposit.h"
 #include "option_Bin.h"
 //#include "option_NAF.h"
 //#include "option_wNAF.h"
@@ -25,7 +19,7 @@ using namespace std;
 #define TESTwNAF 13
 #define TESTGF	14
 #define TESTBIN	100
-#define TEST	1000
+#define TEST	100
 
 #define SclBin	0
 #define ShrBin	2

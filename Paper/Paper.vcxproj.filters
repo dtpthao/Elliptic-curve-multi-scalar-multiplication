@@ -45,8 +45,17 @@
     <ClCompile Include="option_Bin.cpp">
       <Filter>Source Files\bin</Filter>
     </ClCompile>
-    <ClCompile Include="shr_decomposit.cpp">
+    <ClCompile Include="option_Bin3.cpp">
+      <Filter>Source Files\bin</Filter>
+    </ClCompile>
+    <ClCompile Include="option_Bin2.cpp">
+      <Filter>Source Files\bin</Filter>
+    </ClCompile>
+    <ClCompile Include="shr_decomp.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="option_Bin_n.cpp">
+      <Filter>Source Files\bin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +85,7 @@
     <ClInclude Include="Option_JSF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shr_decomposit.h">
+    <ClInclude Include="shr_decomp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

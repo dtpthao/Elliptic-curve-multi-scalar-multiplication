@@ -1,12 +1,15 @@
 ﻿#ifndef _ELLIPSE_H
 #define _ELLIPSE_H
 
+#include <iostream>
 #include <Windows.h>
 #include <time.h>
 #include <stdio.h>
 extern "C" {
 #include"miracl.h"
 }
+
+using namespace std;
 
 #define NUM_OF_EC	10
 
@@ -52,6 +55,6 @@ void readFile(const char *, EC_CONSTANTS_F2m_POLY[NUM_OF_EC]);	//get list of inp
 
 void readFile(const char *, EC_CONSTANTS_F2m_POLY &);
 
-BOOL ecurve2_padd(_MIPD_ epoint *p, epoint *pa);
+BOOL ecurve2_padd(_MIPD_ epoint *p, epoint *pa); // internal add function of ms32.lib
 
 #endif
