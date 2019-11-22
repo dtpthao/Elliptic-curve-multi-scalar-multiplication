@@ -14,9 +14,6 @@ inline void PreMul_Bin_n(int n, pepoint *P, pepoint *plist)
 			epoint2_norm(plist[idx + j]);
 		}
 	}
-	//for (int i = 0; i < 8; i++) {
-	//	std::cout << "pl[" << i << "] :\n"; cotnumEp(plist[i]);
-	//}
 }
 
 void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
@@ -26,11 +23,14 @@ void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
 
 	i = k[n - 1]->len - 1;
 	tmp = k[n - 1]->w[i];
-	while (tmp >> j && j != 32) j++;
+	while (tmp >> j && j != 32) j++; j--;/* cout << "j: " << j << endl;*/
 
 	PreMul_Bin_n(n, P, shrBin->plist);
 
-	for (; ii < n; ii++) index += (k[ii]->w[i] >> j) & 1 << ii;
+	for (; ii < n; ii++) {
+		/*tmp = ((k[ii]->w[i] >> j) & 1) << ii; cout << "tmp: " << tmp << endl;*/
+		index += ((k[ii]->w[i] >> j) & 1) << ii; /*cout << index << endl;*/
+	}
 	if (j == 0) { i--; j = 32; }
 	epoint2_copy(shrBin->plist[index], R);
 
@@ -39,7 +39,7 @@ void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
 		while (j) {
 			index = (w[0] >> j) & 1;
 			for (ii = 1; ii < n; ii++) {
-				index += (w[ii] >> j) & 1 << ii;
+				index += ((w[ii] >> j) & 1) << ii;
 			}
 			ecurve2_double(R);
 			if (index) ecurve2_padd(shrBin->plist[index], R);	// it should be also normalized, but I'll see later
@@ -84,27 +84,14 @@ void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg)
 		strong_bigrand(&Rng, n, k);
 		ShamirDecompose_n(d, k, kx, P, Px);
 		ShamirDecompose3(k, k1, k2, k3, P, P1, P2, P3);
-		//std::cout << "k1: "; cotnum(kx[0], stdout);
-		//std::cout << "k1: "; cotnum(k1, stdout);
-		//std::cout << "k2: "; cotnum(kx[1], stdout);
-		//std::cout << "k2: "; cotnum(k2, stdout);
-		//std::cout << "k3: "; cotnum(kx[2], stdout);
-		//std::cout << "k3: "; cotnum(k3, stdout);
-		//std::cout << "P1: "; cotnumEp(Px[0]);
-		//std::cout << "P1: "; cotnumEp(P1);
-		//std::cout << "P2: "; cotnumEp(Px[1]);
-		//std::cout << "P2: "; cotnumEp(P2);
-		//std::cout << "P3: "; cotnumEp(Px[2]);
-		//std::cout << "P3: "; cotnumEp(P3);
 
 		ShamirMul_Bin_n(d, &shrBin, kx, Px, R);
-		ShamirMul_Bin3_ptr(&shrBin2, k1, k2, k3, P1, P2, P3, R);
-		//for (int i = 0; i < 8; i++) {
-		//	std::cout << "pl[" << i << "] :\n"; cotnumEp(shrBin2.plist[i]);
-		//	std::cout << "pl[" << i << "] :\n"; cotnumEp(shrBin.plist[i]);
-		//}
+		ShamirMul_Bin3_ptr(&shrBin2, k1, k2, k3, P1, P2, P3, R1);
 		ecurve2_mult(k, P, R2);
-		//cmp = epoint2_comp(R2, R);
+		std::cout << "R : \n"; cotnumEp(R);
+		std::cout << "R1: \n"; cotnumEp(R1);
+		std::cout << "R2: \n"; cotnumEp(R2);
+		cmp = epoint2_comp(R2, R);
 		count += cmp;
 	}
 	std::cout << "Cmp: " << count << std::endl;

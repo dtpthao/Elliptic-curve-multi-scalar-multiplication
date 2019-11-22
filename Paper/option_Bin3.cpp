@@ -48,10 +48,10 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	* therefore, R must be set with an initial value
 	* which is not "point at infinity" before the loop
 	* */
-	tmp1 = (k1->w[i] >> --j) & 1;
-	tmp2 = ((k2->w[i] >> j) & 1) << 1;
-	tmp3 = ((k3->w[i] >> j) & 1) << 2;
-	index = tmp1 + tmp2 + tmp3;
+	tmp1 = (k1->w[i] >> --j) & 1; cout << "tmp: " << tmp1 << endl;
+	tmp2 = ((k2->w[i] >> j) & 1) << 1; cout << "tmp: " << tmp2 << endl;
+	tmp3 = ((k3->w[i] >> j) & 1) << 2; cout << "tmp: " << tmp3 << endl;
+	index = tmp1 + tmp2 + tmp3; cout << index << endl;
 	epoint2_copy(shrBin->plist[index], R);
 	if (j == 0) {
 		i--; j = 32;
