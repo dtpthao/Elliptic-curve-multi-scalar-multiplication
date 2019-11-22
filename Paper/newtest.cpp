@@ -53,7 +53,7 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			// n = 2
 			startTimer(&timer2);
 			ShamirDecompose(k, P, a, Q, b);
-			ShamirMul_Bin(a, P, b, Q, R2);
+			ShamirMul_Bin_ptr(&shrBin, a, P, b, Q, R2);
 			stopTimer(&timer2);
 			dur2 = getTickCount(&timer2);
 			min2 = (min2 < dur2) ? min2 : dur2; 
