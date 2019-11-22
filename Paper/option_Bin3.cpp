@@ -34,12 +34,12 @@ inline void PreMul_Bin3(pepoint P1, pepoint P2, pepoint P3, pepoint *plist)
 void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	pepoint P1, pepoint P2, pepoint P3, pepoint R)
 {
-	int tmp1, tmp2, tmp3, i, j = 0, index;
+	int tmp, i, j = 0, index;
 	DWORD w1, w2, w3;
 
 	i = k3->len - 1;
-	tmp1 = k3->w[i];
-	while (tmp1 >> j && j != 32) j++;
+	tmp = k3->w[i];
+	while (tmp >> j && j != 32) j++;
 	
 	PreMul_Bin3(P1, P2, P3, shrBin->plist);
 
@@ -48,10 +48,9 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	* therefore, R must be set with an initial value
 	* which is not "point at infinity" before the loop
 	* */
-	tmp1 = (k1->w[i] >> --j) & 1; cout << "tmp: " << tmp1 << endl;
-	tmp2 = ((k2->w[i] >> j) & 1) << 1; cout << "tmp: " << tmp2 << endl;
-	tmp3 = ((k3->w[i] >> j) & 1) << 2; cout << "tmp: " << tmp3 << endl;
-	index = tmp1 + tmp2 + tmp3; cout << index << endl;
+	index = (k1->w[i] >> --j) & 1;
+	index += ((k2->w[i] >> j) & 1) << 1;
+	index += ((k3->w[i] >> j) & 1) << 2;
 	epoint2_copy(shrBin->plist[index], R);
 	if (j == 0) {
 		i--; j = 32;
@@ -61,10 +60,9 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 		w2 = k2->w[i];
 		w3 = k3->w[i];
 		while (j) {
-			tmp1 = (w1 >> j) & 1;
-			tmp2 = ((w2 >> j) & 1) << 1;
-			tmp3 = ((w3 >> j) & 1) << 2;
-			index = tmp1 + tmp2 + tmp3;
+			index = (w1 >> j) & 1;
+			index += ((w2 >> j) & 1) << 1;
+			index += ((w3 >> j) & 1) << 2;
 			ecurve2_double(R);
 			if (index)
 				ecurve2_padd(shrBin->plist[index], R);
