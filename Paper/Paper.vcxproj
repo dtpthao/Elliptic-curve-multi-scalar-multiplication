@@ -132,6 +132,7 @@
     <ClCompile Include="Ellipse.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mrec2m.c" />
+    <ClCompile Include="newtest.cpp" />
     <ClCompile Include="option_Bin.cpp" />
     <ClCompile Include="option_Bin2.cpp" />
     <ClCompile Include="option_Bin3.cpp" />

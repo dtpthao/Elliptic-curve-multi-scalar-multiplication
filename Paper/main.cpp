@@ -26,19 +26,21 @@ int main()
 	big k = mirvar(1);
 	int m[NUM_OF_EC + 1] = { 0 };// { 163, 233, 283, 409, 571, 0 };
 
-	Result testBin[NUM_OF_EC];
 	string msg;
 	int len = 0;
 	readFile("DSTU4145TablePrameters.txt", EC);
-
-	for (int i = 0; i < 1/*NUM_OF_EC*/; i++) {
+	Result res[NUM_OF_EC + 1];
+	for (int i = 0; i < NUM_OF_EC; i++) {
 		m[i] = EC[i].m;
 		if (!GenEC(EC[i], a, b, P, x, y, n))
 			return 1;
-		test_bin3(Rng, P, n, msg);
+		//test_bin3(Rng, P, n, msg);
 		//test_bin_n(3, Rng, P, n, msg);
+		compares(Rng, P, n, res[i]);
 	}
 	cout << endl << msg << endl;
+	cout << setw(19) << "" << "n=1           n=2           n=3           n=3           n=4        lib(n=1)\n";
+	printcompares_bin(res, m);
 
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
 

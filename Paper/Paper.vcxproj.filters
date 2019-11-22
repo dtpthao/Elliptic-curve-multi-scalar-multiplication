@@ -57,6 +57,9 @@
     <ClCompile Include="option_Bin_n.cpp">
       <Filter>Source Files\bin</Filter>
     </ClCompile>
+    <ClCompile Include="newtest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ms32.lib">

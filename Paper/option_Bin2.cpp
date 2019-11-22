@@ -20,7 +20,6 @@ void ShamirMul_Bin_ptr(PL *shrBin, big a,
 	while (lastw >> j && j != 32) j++;
 
 	PreMul_Bin(P, Q, shrBin->plist);
-	epoint_set(0, 0, 1, R);
 
 	/* *
 	 * ecurve2_padd doesn't work with point at infinity
