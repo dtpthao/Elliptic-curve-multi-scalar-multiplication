@@ -1,6 +1,6 @@
 #include "Test.h"
 
-#define TESTS 1000
+#define TESTS 2000
 #define REPEAT 10
 void compares(csprng &Rng, pepoint P, big n, Result &res)
 {
@@ -74,18 +74,20 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			dur4 = getTickCount(&timer4);
 			min4 = (min4 < dur4) ? min4 : dur4; 
 
-			// n = 4
+			// lib, n = 2
 			startTimer(&timer5);
-			ShamirDecompose_n(4, k, kx, P, Px);
-			ShamirMul_Bin_n(4, &shrBin3, kx, Px, R4);
+			//ShamirDecompose_n(4, k, kx, P, Px);
+			//ShamirMul_Bin_n(4, &shrBin3, kx, Px, R5);
+			ShamirDecompose(k, P, a, Q, b);
+			ecurve2_mult2(a, P, b, Q, R5);
 			stopTimer(&timer5);
 			dur5 = getTickCount(&timer5);
 			min5 = (min5 < dur5) ? min5 : dur5;
 
-			// lib, n = 1
+			// lib, n = 3
 			startTimer(&timer6);
-			//ShamirDecomposit_n(5, k, g, r, y, P);
-			ecurve2_mult(k, P, R);
+			ShamirDecompose_n(3, k, kx, P, Px);
+			ecurve2_multn(3, kx, Px, R);
 			stopTimer(&timer6);
 			dur6 = getTickCount(&timer6);
 			min6 = (min6 < dur6) ? min6 : dur6;

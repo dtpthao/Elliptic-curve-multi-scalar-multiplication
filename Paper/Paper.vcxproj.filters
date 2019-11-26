@@ -16,6 +16,9 @@
     <Filter Include="Source Files\bin">
       <UniqueIdentifier>{2c924c67-38bf-4993-bab0-ad5cfa7ee878}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\JSF">
+      <UniqueIdentifier>{b33834bc-dc5d-43fe-b949-8ec81bf1037a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Duration.cpp">
@@ -34,9 +37,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mrec2m.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="option_JSF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="option_NAF.cpp">
@@ -59,6 +59,12 @@
     </ClCompile>
     <ClCompile Include="newtest.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="option_JSF.cpp">
+      <Filter>Source Files\JSF</Filter>
+    </ClCompile>
+    <ClCompile Include="option_dJSF.cpp">
+      <Filter>Source Files\JSF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,10 +91,10 @@
     <ClInclude Include="option_Bin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Option_JSF.h">
+    <ClInclude Include="shr_decomp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shr_decomp.h">
+    <ClInclude Include="option_JSF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

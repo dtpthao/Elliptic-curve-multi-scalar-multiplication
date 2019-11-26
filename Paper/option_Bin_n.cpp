@@ -23,14 +23,11 @@ void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
 
 	i = k[n - 1]->len - 1;
 	tmp = k[n - 1]->w[i];
-	while (tmp >> j && j != 32) j++; j--;/* cout << "j: " << j << endl;*/
+	while (tmp >> j && j != 32) j++; j--;
 
 	PreMul_Bin_n(n, P, shrBin->plist);
 
-	for (; ii < n; ii++) {
-		/*tmp = ((k[ii]->w[i] >> j) & 1) << ii; cout << "tmp: " << tmp << endl;*/
-		index += ((k[ii]->w[i] >> j) & 1) << ii; /*cout << index << endl;*/
-	}
+	for (; ii < n; ii++) index += ((k[ii]->w[i] >> j) & 1) << ii;
 	if (j == 0) { i--; j = 32; }
 	epoint2_copy(shrBin->plist[index], R);
 
@@ -42,7 +39,7 @@ void ShamirMul_Bin_n(int n, PL *shrBin, big *k, pepoint *P, pepoint R)
 				index += ((w[ii] >> j) & 1) << ii;
 			}
 			ecurve2_double(R);
-			if (index) ecurve2_padd(shrBin->plist[index], R);	// it should be also normalized, but I'll see later
+			if (index) ecurve2_padd(shrBin->plist[index], R);	// it's much better without normalizing, don't do it!
 			//cout << "R\n"; cotnumEp(R);
 			j--;
 		}

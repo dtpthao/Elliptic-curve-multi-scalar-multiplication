@@ -137,6 +137,7 @@
     <ClCompile Include="option_Bin2.cpp" />
     <ClCompile Include="option_Bin3.cpp" />
     <ClCompile Include="option_Bin_n.cpp" />
+    <ClCompile Include="option_dJSF.cpp" />
     <ClCompile Include="option_JSF.cpp" />
     <ClCompile Include="option_NAF.cpp" />
     <ClCompile Include="PrintTest.cpp" />
@@ -151,7 +152,7 @@
     <ClInclude Include="Ellipse.h" />
     <ClInclude Include="miracl.h" />
     <ClInclude Include="option_Bin.h" />
-    <ClInclude Include="Option_JSF.h" />
+    <ClInclude Include="option_JSF.h" />
     <ClInclude Include="PrintTest.h" />
     <ClInclude Include="shr_decomp.h" />
     <ClInclude Include="Test.h" />
