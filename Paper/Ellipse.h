@@ -49,7 +49,7 @@ int GenEC(EC_CONSTANTS_F2m_POLY, big, big, pepoint, big, big, big);		//Initializ
 
 void cotnumEp(pepoint P);	//display P.x, P.y
 
-void GetConstainsEC(EC_CONSTANTS_F2m_POLY &, unsigned int);		//get const Input params EC
+void GetConstantsEC(EC_CONSTANTS_F2m_POLY &, unsigned int);		//get const Input params EC
 
 void readFile(const char *, EC_CONSTANTS_F2m_POLY[NUM_OF_EC]);	//get list of input params EC 
 

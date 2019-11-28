@@ -33,7 +33,7 @@ int main()
 	Result res[NUM_OF_EC + 1];
 	for (int i = 0; i < NUM_OF_EC; i++) {
 		//m[i] = EC[i].m;
-		GetConstainsEC(EC[i], m[i]);
+		GetConstantsEC(EC[i], m[i]);
 		if (!GenEC(EC[i], a, b, P, x, y, n))
 			return 1;
 		//cout << m[i] << "\t";
@@ -45,7 +45,7 @@ int main()
 	}
 	//cout << endl << "without PreMul_Bin_n norm" << endl;
 	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
-	cout << setw(19) << "" << "n=1           n=2          Bin3          JSF2           JSF3        lib(n=1)\n";
+	cout << setw(19) << "" <<   "Bin1         Bin2          Bin3          JSF2           JSF3        lib(n=1)\n";
 	printcompares_bin(res, m);
 
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
