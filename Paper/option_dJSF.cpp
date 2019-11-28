@@ -84,10 +84,6 @@ void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
 			ecurve2_padd(plist[i0 - k], plist[downi - k]);
 
 			// checked - no epoint2_norm() needed here
-			//epoint2_norm(plist[upi + k]);
-			//epoint2_norm(plist[upi - k]);
-			//epoint2_norm(plist[downi + k]);
-			//epoint2_norm(plist[downi - k]);
 		}
 	}
 }
@@ -104,10 +100,6 @@ void ShamirMul_dJSF(int d, PL *shrJSF, big *k, pepoint *P, pepoint R)
 	idx = I0 = tmp >> 1;
 	PreMul_dJSF(d, tmp, P, shrJSF->plist);
 	lendJSF = GendJSF(d, k, dJSF);
-	//for (i = 0; i <= 13; i++) {
-	//	cout << "pl[" << (13 - i) << "]: \n"; cotnumEp(shrJSF->plist[13 - i]);
-	//	cout << "pl[" << (13 + i) << "]: \n"; cotnumEp(shrJSF->plist[13 + i]);
-	//}
 
 	for (j = 0, tmp = 1; j < d; j++, tmp *= 3) {
 		idx -= tmp * dJSF[j][lendJSF - 1];

@@ -1,40 +1,6 @@
 #include "option_JSF.h"
-//#include "option_NAF.h"
 
-inline void subGenJSF(big Var1, big Var2, char &JSFi, bool &d, big RS)	//in use
-{
-	DWORD v1 = Var1->w[0], v2 = Var2->w[0];
-	if (!(v1 & 1)) JSFi = 0;
-	else {
-		JSFi = (v1 & 2) ? -1 : 1;
-		if ((!(v1 & 7 ^ 3) || !(v1 & 7 ^ 5)) && ((v2 & 3) == 2))
-			JSFi = -JSFi;
-	}
-	if (((int)d << 1) == (JSFi + 1)) d = 1 - d;
-	sftbit(RS, -1, RS);
-}
-
-DWORD GenJSF(big R, big S, char *JSFr, char *JSFs)						//in use
-{
-	big L1 = mirvar(1), L2 = mirvar(1), 
-		R1 = mirvar(0), S1 = mirvar(0);
-	bool d1 = 0, d2 = 0;
-	DWORD lenJSF = 0;
-
-	copy(R, L1); copy(S, L2); copy(R, R1); copy(S, S1);
-	while (L1->len > 0 || L2->len > 0) {
-		lenJSF++;
-		subGenJSF(L1, L2, JSFr[lenJSF], d1, R1);
-		subGenJSF(L2, L1, JSFs[lenJSF], d2, S1);
-		incr(R1, d1, L1);
-		incr(S1, d2, L2);
-	}
-	mirkill(L1); mirkill(L2);
-	mirkill(R1); mirkill(S1);
-	return lenJSF;
-}
-
-DWORD GenJSF2(big R, big S, char *JSFr, char *JSFs)
+DWORD GenJSF(big R, big S, char *JSFr, char *JSFs)
 {
 	big R1 = mirvar(0), S1 = mirvar(0);
 	DWORD lenJSF = 0;
@@ -104,7 +70,7 @@ void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)	//in 
 	int index;
 
 	PreMul_JSF(P, Q, opt);
-	lenJSF = GenJSF2(a, b, JSFa, JSFb);
+	lenJSF = GenJSF(a, b, JSFa, JSFb);
 	index = 4 - 3 * JSFa[lenJSF] - JSFb[lenJSF];
 	epoint_copy(opt->plist[index], R);
 	for (int i = lenJSF - 1; i > 0; i--) {

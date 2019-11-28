@@ -37,8 +37,6 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 	big a = mirvar(0), b = mirvar(0);
 
 	PL shrOpt(81);
-	//PL shrBin2(8);
-	//PL shrBin3(16);
 	for (int i = 0; i < TESTS; i++) {
 		strong_bigrand(&Rng, n, k);
 
@@ -125,8 +123,6 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 	res.p[5] = (res.t[5] / res.t[0]) * 100;
 
 	shrOpt.Destructor();
-	//shrBin2.Destructor();
-	//shrBin3.Destructor();
 	for (int i = 0; i < dimens; i++) {
 		mirkill(kx[i]);
 		epoint_free(Px[i]);
