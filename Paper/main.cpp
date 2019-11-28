@@ -45,7 +45,7 @@ int main()
 	}
 	//cout << endl << "without PreMul_Bin_n norm" << endl;
 	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
-	cout << setw(19) << "" <<   "Bin1         Bin2          Bin3          Bin4           Bin5           lib1\n";
+	cout << setw(19) << "" <<   "JSF1         JSF2          JSF3          JSF4           JSF5           lib1\n";
 	printcompares_bin(res, m);
 
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
