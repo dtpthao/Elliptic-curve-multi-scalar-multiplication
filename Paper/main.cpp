@@ -24,26 +24,29 @@ int main()
 
 	pepoint P = epoint_init();
 	big k = mirvar(1);
-	int m[NUM_OF_EC + 1] = { 0 };// { 163, 233, 283, 409, 571, 0 };
+	//int m[NUM_OF_EC + 1] = { 0 };// { 163, 233, 283, 409, 571, 0 };
+	int m[NUM_OF_EC + 1] = { 163, 233, 283, 409, 571, 0 };
 
 	string msg;
 	int len = 0;
-	readFile("DSTU4145TablePrameters.txt", EC);
+	//readFile("DSTU4145TablePrameters.txt", EC);
 	Result res[NUM_OF_EC + 1];
 	for (int i = 0; i < NUM_OF_EC; i++) {
-		m[i] = EC[i].m;
+		//m[i] = EC[i].m;
+		GetConstainsEC(EC[i], m[i]);
 		if (!GenEC(EC[i], a, b, P, x, y, n))
 			return 1;
 		//cout << m[i] << "\t";
 		//TestShrMul_Bin(Rng, P, n, msg);
 		//test_bin3(Rng, P, n, msg);
 		//test_bin_n(3, Rng, P, n, msg);
-		test_dJSF(3, Rng, P, n, msg);
-		//compares(Rng, P, n, res[i]);
+		//test_dJSF(3, Rng, P, n, msg);
+		compares(Rng, P, n, res[i]);
 	}
 	//cout << endl << "without PreMul_Bin_n norm" << endl;
-	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           lib2        lib(n=3)\n";
-	//printcompares_bin(res, m);
+	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
+	cout << setw(19) << "" << "n=1           n=2          Bin3          JSF2           JSF3        lib(n=1)\n";
+	printcompares_bin(res, m);
 
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
 

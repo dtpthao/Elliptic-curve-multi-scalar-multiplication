@@ -45,7 +45,11 @@ DWORD GendJSF(int d, big *r, int **dJSF)
 		loop = false;
 		for (i = 0; i < d; i++) {
 			sftbit(x[i], -1, x[i]);
-			if (dJSF[i][lenJSF] == -1) incr(x[i], 1, x[i]);
+			if (dJSF[i][lenJSF] == -1) {
+				if (x[i]->len == 0) x[i]->len = 1;
+				if (x[i]->w[0] ^ 0xffffffff) x[i]->w[0]++;
+				else incr(x[i], 1, x[i]);
+			}
 			loop |= !(x[i]->len == 1 && x[i]->w[0] == 0 || x[i]->len == 0);
 		}
 		lenJSF++;

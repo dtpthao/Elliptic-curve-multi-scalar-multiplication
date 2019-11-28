@@ -34,6 +34,35 @@ DWORD GenJSF(big R, big S, char *JSFr, char *JSFs)						//in use
 	return lenJSF;
 }
 
+DWORD GenJSF2(big R, big S, char *JSFr, char *JSFs)
+{
+	big R1 = mirvar(0), S1 = mirvar(0);
+	DWORD lenJSF = 0;
+
+	copy(R, R1); copy(S, S1);
+	while (S1->len > 0 || R1->len > 0) {
+		lenJSF++;
+		JSFr[lenJSF] = R1->w[0] & 1;
+		JSFs[lenJSF] = S1->w[0] & 1;
+		if (JSFr[lenJSF] & JSFs[lenJSF]) {
+			if (R1->w[0] & 2) JSFr[lenJSF] = -JSFr[lenJSF];
+			if (S1->w[0] & 2) JSFs[lenJSF] = -JSFs[lenJSF];
+		}
+		else if (JSFr[lenJSF] ^ JSFs[lenJSF]) {
+			if ((R1->w[0] & 2) ^ (S1->w[0] & 2)) {
+				JSFr[lenJSF] = -JSFr[lenJSF];
+				JSFs[lenJSF] = -JSFs[lenJSF];
+			}
+		}
+		sftbit(R1, -1, R1);
+		sftbit(S1, -1, S1);
+		if (JSFr[lenJSF] == -1) incr(R1, 1, R1);
+		if (JSFs[lenJSF] == -1) incr(S1, 1, S1);
+	}
+	mirkill(R1); mirkill(S1);
+	return lenJSF;
+}
+
 /*************************************************************************************************/
 /**______________________________________In Use_________________________________________________**/
 /**                                                                                             **/
@@ -69,21 +98,19 @@ inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt)					//in use
 
 void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)	//in use
 {
-	char JSFa[300] = { 0 };
-	char JSFb[300] = { 0 };
+	char JSFa[1000] = { 0 };
+	char JSFb[1000] = { 0 };
 	DWORD lenJSF;
 	int index;
 
 	PreMul_JSF(P, Q, opt);
-	lenJSF = GenJSF(a, b, JSFa, JSFb);
-	epoint2_set(0, 0, 1, R);
-
-	for (int i = lenJSF; i > 0; i--) {
-		//index = 4 - 3 * JSFa[i] - JSFb[i];
+	lenJSF = GenJSF2(a, b, JSFa, JSFb);
+	index = 4 - 3 * JSFa[lenJSF] - JSFb[lenJSF];
+	epoint_copy(opt->plist[index], R);
+	for (int i = lenJSF - 1; i > 0; i--) {
+		index = 4 - 3 * JSFa[i] - JSFb[i];
 		ecurve2_double(R);
-		//if (index) ecurve2_padd(opt->plist[index], R);
-		//ecurve2_add(R, R);
-		ecurve2_add(opt->plist[4 - 3 * JSFa[i] - JSFb[i]], R);
+		if (index != 4) ecurve2_padd(opt->plist[index], R);
 	}
 }
 

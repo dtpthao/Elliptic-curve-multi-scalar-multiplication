@@ -11,7 +11,7 @@ extern "C" {
 
 using namespace std;
 
-#define NUM_OF_EC	10
+#define NUM_OF_EC	5 //10
 
 #define EC163 0
 #define EC233 1
