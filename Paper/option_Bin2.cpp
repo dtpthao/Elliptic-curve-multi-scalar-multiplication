@@ -9,10 +9,9 @@ inline void PreMul_Bin(pepoint P, pepoint Q, pepoint *plist)
 	epoint2_norm(plist[3]);
 }
 
-void ShamirMul_Bin_ptr(PL *shrBin, big a,
-	pepoint P, big b, pepoint Q, pepoint R)					//in use
+void ShamirMul_Bin_ptr(PL *shrBin, big a, pepoint P, big b, pepoint Q, pepoint R)
 {
-	int bita, bitb, i, j = 0, index;
+	int i, j = 0, index;
 	DWORD shift = 1, lastw, a1, b1;
 
 	i = b->len - 1;
@@ -20,20 +19,15 @@ void ShamirMul_Bin_ptr(PL *shrBin, big a,
 	while (lastw >> j && j != 32) j++;
 
 	PreMul_Bin(P, Q, shrBin->plist);
-	epoint_set(0, 0, 1, R);
 
 	/* *
 	 * ecurve2_padd doesn't work with point at infinity
 	 * therefore, R must be set with an initial value 
 	 * which is not "point at infinity" before the loop
 	 * */
-	if (j != 1) {
-		bita = (a->w[i] >> --j) & 1;
-		bitb = (b->w[i] >> (j - 1)) & 2;	/** !!! j can be 0 ==>> fixed **/
-		index = bita + bitb;
-	}
-	else {
-		index = (a->w[i] & 1) + ((b->w[i] & 1) << 1);
+	index = (a->w[i] >> --j) & 1;
+	index += ((b->w[i] >> j) & 1) << 1;
+	if (j == 0) {
 		i--; j = 32;
 	}
 	epoint2_copy(shrBin->plist[index], R);
@@ -41,10 +35,9 @@ void ShamirMul_Bin_ptr(PL *shrBin, big a,
 		a1 = a->w[i];
 		b1 = b->w[i];
 		while (j) {
-			bita = (a1 >> j) & 1;
-			bitb = (b1 >> (j - 1)) & 2;
+			index = (a1 >> j) & 1;
+			index += (b1 >> (j - 1)) & 2;
 			ecurve2_double(R);
-			index = bitb + bita;
 			if (index)
 				ecurve2_padd(shrBin->plist[index], R);
 			j--;
@@ -55,20 +48,21 @@ void ShamirMul_Bin_ptr(PL *shrBin, big a,
 	}
 }
 
+// bug when m = 257
 void ShamirMul_Bin(big a, pepoint P, big b, pepoint Q, pepoint R)
 {
 	int bita, bitb, i, j = 0, index;
 	DWORD shift = 1, lastw, a1, b1;
-	PL globalShrBin(4);
+	PL ShrBin(4);
 	i = b->len - 1;
 	lastw = b->w[i];
 	while (lastw >> j && j != 31) j++;
 
-	PreMul_Bin(P, Q, globalShrBin.plist);
+	PreMul_Bin(P, Q, ShrBin.plist);
 	epoint_set(0, 0, 1, R);
 	bita = (a->w[i] >> --j) & 1;
 	bitb = (b->w[i] >> (j - 1)) & 2;	/** !!!!!!! j can be 0 **/
-	epoint2_copy(globalShrBin.plist[bitb + bita], R);
+	epoint2_copy(ShrBin.plist[bitb + bita], R);
 	for (--j; i >= 0; i--, j = 31) {
 		a1 = a->w[i];
 		b1 = b->w[i];
@@ -78,17 +72,17 @@ void ShamirMul_Bin(big a, pepoint P, big b, pepoint Q, pepoint R)
 			ecurve2_double(R);
 			index = bitb + bita;
 			if (index)
-				ecurve2_padd(globalShrBin.plist[index], R);
+				ecurve2_padd(ShrBin.plist[index], R);
 			//ecurve2_add(R, R);
 		//ecurve2_add(globalShrBin.plist[bitb + bita], R);
 			j--;
 		}
 		index = (a1 & 1) + ((b1 & 1) << 1);
 		ecurve2_double(R);
-		if (index) ecurve2_padd(globalShrBin.plist[index], R);
+		if (index) ecurve2_padd(ShrBin.plist[index], R);
 		//ecurve2_add(globalShrBin.plist[index], R);
 	}
-	globalShrBin.Destructor();
+	ShrBin.Destructor();
 }
 
 void TestShrMul_Bin(csprng &Rng, pepoint P, big n, std::string &msg) {
@@ -103,7 +97,7 @@ void TestShrMul_Bin(csprng &Rng, pepoint P, big n, std::string &msg) {
 	PL shrBin(4);
 	//ecurve2_mult(a, P, Q);
 	int count = 0, cmp = 0;
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 10000; i++) {
 		//strong_bigdig(&Rng, 16, 16, k);
 		//std::cout << "k: "; cotnum(k, stdout);
 		strong_bigrand(&Rng, n, k);

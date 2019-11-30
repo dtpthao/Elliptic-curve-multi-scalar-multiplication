@@ -108,13 +108,33 @@ void ShamirDecompose3(big k, big k1, big k2, big k3,
 	epoint2_copy(P, P1);
 
 	epoint2_copy(P, P2);
-	for (i = 0; i < len; i++) {
-		ecurve2_double(P2);
-	}
+	for (i = 0; i < len; i++) ecurve2_double(P2);
 
 	epoint2_copy(P2, P3);
-	for (i = 0; i < len; i++) {
-		ecurve2_double(P3);
+	for (i = 0; i < len; i++) ecurve2_double(P3);
+
+	mirkill(tmp);
+}
+
+void ShamirDecompose_n(int n, big k, big *kx, pepoint P, pepoint *Px)
+{
+	if (k->len == 0) return;
+	DWORD len, i = 31;
+	big tmp = mirvar(1);
+
+	len = k->w[k->len - 1];
+	while (!(len & (1 << i))) i--;
+	len = (k->len << 5) - 31 + i;
+	len /= n;
+
+	sftbit(tmp, len, tmp);
+	copy(k, kx[0]);
+	epoint2_copy(P, Px[0]);
+
+	for (i = 1; i < n; i++) {
+		divide(kx[i - 1], tmp, kx[i]);
+		epoint2_copy(Px[i - 1], Px[i]);
+		for (int j = 0; j < len; j++) ecurve2_double(Px[i]);
 	}
 
 	mirkill(tmp);

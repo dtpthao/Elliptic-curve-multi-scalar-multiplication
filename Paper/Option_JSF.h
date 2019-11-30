@@ -2,16 +2,20 @@
 #define _OPTION_JSF_H
 
 #include "Ellipse.h"
+#include "Duration.h"
 
-inline void subGenJSF(big Var1, big Var2, char &JSFi, bool &d, big RS);	//in use
-DWORD GenJSF(big R, big S, char *JSFr, char *JSFs);						//in use
 
 /**************************************************************************************/
 /**________________________________In Use____________________________________________**/
 /**                                                                                  **/
-inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt);						//in use
-void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R);	//in use
+/* option_JSF.cpp */
+DWORD GenJSF(big R, big S, char *JSFr, char *JSFs);
+inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt);
+void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R);
 
+/* option_dJSF.cpp */
+void ShamirMul_dJSF(int d, PL *shrJSF, big *k, pepoint *P, pepoint R);
+void test_dJSF(int d, csprng &Rng, pepoint P, big n, string msg);
 /**______________________________End In Use__________________________________________**/
 /**************************************************************************************/
 

@@ -58,7 +58,7 @@ void cotnumEp(pepoint P) {
 	std::cout << std::endl;
 }
 
-void GetConstainsEC(EC_CONSTANTS_F2m_POLY &EC, unsigned int m) {
+void GetConstantsEC(EC_CONSTANTS_F2m_POLY &EC, unsigned int m) {
 
 	EC_CONSTANTS_F2m_POLY ECm[5];
 	switch (m)

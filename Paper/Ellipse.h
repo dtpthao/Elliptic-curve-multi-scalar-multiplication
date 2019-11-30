@@ -11,7 +11,7 @@ extern "C" {
 
 using namespace std;
 
-#define NUM_OF_EC	10
+#define NUM_OF_EC	5 //10
 
 #define EC163 0
 #define EC233 1
@@ -49,12 +49,13 @@ int GenEC(EC_CONSTANTS_F2m_POLY, big, big, pepoint, big, big, big);		//Initializ
 
 void cotnumEp(pepoint P);	//display P.x, P.y
 
-void GetConstainsEC(EC_CONSTANTS_F2m_POLY &, unsigned int);		//get const Input params EC
+void GetConstantsEC(EC_CONSTANTS_F2m_POLY &, unsigned int);		//get const Input params EC
 
 void readFile(const char *, EC_CONSTANTS_F2m_POLY[NUM_OF_EC]);	//get list of input params EC 
 
 void readFile(const char *, EC_CONSTANTS_F2m_POLY &);
 
+// doesn't work with point at infinity
 BOOL ecurve2_padd(_MIPD_ epoint *p, epoint *pa); // internal add function of ms32.lib
 
 #endif

@@ -9,9 +9,7 @@
 //#include "option_NAF.h"
 //#include "option_wNAF.h"
 #include "option_JSF.h"
-//#include "option_JT.h"
-//#include "option_BNBC.h"
-//#include "option_AKDAC.h"
+#include "shr_decomp.h"
 
 #define TESTALL 10
 #define TESTSCL 11
@@ -32,7 +30,7 @@
 #define ShrJT	10
 #define ShrBNBC 12
 #define ShrAKDAC 14
-#define LIB		3			//16
+#define LIB		5			//16
 
 struct Result {
 	double t[LIB + 1] = { 0 };
@@ -55,9 +53,13 @@ void TestSclBin(csprng &Rng, pepoint P, big n, Result &res);
 void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg);
 
 
-
 ////////////////////////////////////////////////////////////////////////////
 void Test(csprng &Rng, pepoint P, big n, Result &res, string &msg);
+
+/* newtest.cpp */
+void compares(csprng &Rng, pepoint P, big n, Result &res);
+#define NUM_OF_P 5
+void printcompares_bin(Result res[NUM_OF_P + 1], int *m);
 
 
 /************************************************************************
