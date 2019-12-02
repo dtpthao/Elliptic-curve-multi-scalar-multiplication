@@ -10,8 +10,8 @@
 /**                                                                                  **/
 /* option_JSF.cpp */
 DWORD GenJSF(big R, big S, char *JSFr, char *JSFs);
-inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt);
-void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R);
+inline void PreMul_JSF(pepoint P, pepoint Q, pepoint *plist);
+void ShamirMul_JSF(big a, pepoint P, big b, pepoint Q, pepoint R);
 
 /* option_dJSF.cpp */
 void ShamirMul_dJSF(int d, PL *shrJSF, big *k, pepoint *P, pepoint R);

@@ -1,5 +1,4 @@
 #include "option_JSF.h"
-//#include "option_NAF.h"
 
 DWORD GenJSF(big R, big S, char *JSFr, char *JSFs)
 {
@@ -35,7 +34,59 @@ DWORD GenJSF(big R, big S, char *JSFr, char *JSFs)
 /**                                                                                             **/
 
 // {P+Q, P, P-Q, Q, 0, -Q, Q-P, -P, -P-Q}
-inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt)					//in use
+inline void PreMul_JSF(pepoint P, pepoint Q, pepoint *plist)
+{
+	pepoint tmp = epoint_init();
+	epoint2_copy(P, plist[0]);
+	ecurve2_padd(Q, plist[0]);
+	epoint2_norm(plist[0]);
+
+	epoint2_copy(P, plist[1]);
+	epoint2_copy(Q, plist[3]);
+
+	epoint2_copy(Q, plist[5]);
+	epoint2_negate(plist[5]);		//plist[5] is normalized
+
+	epoint2_copy(P, plist[7]);
+	epoint2_negate(plist[7]);
+
+	epoint2_copy(P, plist[2]);
+	ecurve2_padd(plist[5], plist[2]);
+	epoint2_norm(plist[2]);
+
+	epoint2_copy(Q, plist[6]);
+	ecurve2_padd(plist[7], plist[6]);
+	epoint2_norm(plist[6]);
+
+	epoint2_copy(plist[0], plist[8]);
+	epoint2_negate(plist[8]);
+}
+
+void ShamirMul_JSF(big a, pepoint P, big b, pepoint Q, pepoint R)
+{
+	char JSFa[1000] = { 0 };
+	char JSFb[1000] = { 0 };
+	DWORD lenJSF;
+	int index;
+
+	PreMul_JSF(P, Q, glob_epoints);
+	lenJSF = GenJSF(a, b, JSFa, JSFb);
+	index = 4 - 3 * JSFa[lenJSF] - JSFb[lenJSF];
+	epoint_copy(glob_epoints[index], R);
+	for (int i = lenJSF - 1; i > 0; i--) {
+		index = 4 - 3 * JSFa[i] - JSFb[i];
+		ecurve2_double(R);
+		if (index != 4) ecurve2_padd(glob_epoints[index], R);
+	}
+}
+
+/**__________________________________End In Use_________________________________________________**/
+/*************************************************************************************************/
+
+/**____________________________Better not delete anything_______________________________________**/
+/*************************************************************************************************/
+// {P+Q, P, P-Q, Q, 0, -Q, Q-P, -P, -P-Q}
+inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt)
 {
 	pepoint tmp = epoint_init();
 	epoint2_copy(P, opt->plist[0]);
@@ -63,7 +114,7 @@ inline void PreMul_JSF(pepoint P, pepoint Q, PL *opt)					//in use
 	epoint2_negate(opt->plist[8]);
 }
 
-void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)	//in use
+void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)
 {
 	char JSFa[1000] = { 0 };
 	char JSFb[1000] = { 0 };
@@ -80,11 +131,6 @@ void ShamirMul_JSF(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R)	//in 
 		if (index != 4) ecurve2_padd(opt->plist[index], R);
 	}
 }
-
-/**__________________________________End In Use_________________________________________________**/
-/*************************************************************************************************/
-
-
 
 /*************************************************************************************************/
 /**__________________________________Another Option_____________________________________________**/
