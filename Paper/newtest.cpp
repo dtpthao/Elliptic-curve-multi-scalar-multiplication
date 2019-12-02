@@ -1,6 +1,6 @@
 #include "Test.h"
 
-#define TESTS 5000
+#define TESTS 5
 #define REPEAT 10
 void compares(csprng &Rng, pepoint P, big n, Result &res)
 {

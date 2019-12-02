@@ -1,7 +1,8 @@
 ﻿#include "Ellipse.h"
 #include <iostream>
 
-//PointList globalShrBin(4);
+//PointList glob_epoints(20);
+pepoint glob_epoints[LEN_GLOB_EPOINTS];
 
 PointList::PointList(int len) {
 	this->len = len;
@@ -12,7 +13,7 @@ PointList::PointList(int len) {
 	}
 }
 
-void PL::Destructor() {
+void PointList::Destructor() {
 	for (int i = 0; i < this->len; i++) {
 		epoint_free(this->plist[i]);
 	}

@@ -41,7 +41,9 @@ typedef struct PointList {
 	void Destructor();
 } PL;
 
-//extern PL globalShrBin;
+#define LEN_GLOB_EPOINTS 30
+//extern PointList glob_epoints;
+extern pepoint glob_epoints[LEN_GLOB_EPOINTS];
 
 void InitStrongRNG(csprng *Rng);
 

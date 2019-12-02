@@ -27,6 +27,10 @@ int main()
 	//int m[NUM_OF_EC + 1] = { 0 };// { 163, 233, 283, 409, 571, 0 };
 	int m[NUM_OF_EC + 1] = { 163, 233, 283, 409, 571, 0 };
 
+	for (int i = 0; i < LEN_GLOB_EPOINTS; i++) {
+		glob_epoints[i] = epoint_init();
+	}
+
 	string msg;
 	int len = 0;
 	//readFile("DSTU4145TablePrameters.txt", EC);
@@ -50,6 +54,9 @@ int main()
 
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
 
+	for (int i = 0; i < LEN_GLOB_EPOINTS; i++) {
+		epoint_free(glob_epoints[i]);
+	}
 	epoint_free(P);
 	mirkill(a); mirkill(b); mirkill(k);
 	mirexit();
