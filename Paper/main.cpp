@@ -42,8 +42,8 @@ int main()
 			return 1;
 		//cout << m[i] << "\t";
 		//TestShrMul_Bin(Rng, P, n, msg);
-		test_bin3(Rng, P, n, msg);
-		//test_bin_n(3, Rng, P, n, msg);
+		//test_bin3(Rng, P, n, msg);
+		test_bin_n(3, Rng, P, n, msg);
 		//test_dJSF(3, Rng, P, n, msg);
 		//compares(Rng, P, n, res[i]);
 	}
