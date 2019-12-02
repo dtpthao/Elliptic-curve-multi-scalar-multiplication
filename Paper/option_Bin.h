@@ -12,7 +12,6 @@ void ScalarMul_Bin_L2R(big k, pepoint P, pepoint R);
 inline void PreMul_Bin(pepoint P, pepoint Q, pepoint *plist);
 // use this function
 void ShamirMul_Bin_ptr(PL *shrBin, big a, pepoint P, big b, pepoint Q, pepoint R);
-// this's bugged when m = 257
 void ShamirMul_Bin(big a, pepoint P, big b, pepoint Q, pepoint R);
 void TestShrMul_Bin(csprng &Rng, pepoint P, big n, std::string &msg);
 

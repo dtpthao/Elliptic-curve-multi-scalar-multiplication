@@ -3,7 +3,6 @@
 void ScalarMul_Bin_L2R(big k, pepoint P, pepoint R)
 {
 	unsigned int len, i = 31;
-	epoint_set(0, 0, 1, R);
 
 	len = k->w[k->len - 1];
 	while (len && !(len & (1 << i))) i--;

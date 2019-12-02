@@ -48,8 +48,46 @@ void ShamirMul_Bin_ptr(PL *shrBin, big a, pepoint P, big b, pepoint Q, pepoint R
 	}
 }
 
-// bug when m = 257
 void ShamirMul_Bin(big a, pepoint P, big b, pepoint Q, pepoint R)
+{
+	int i, j = 0, index;
+	DWORD shift = 1, lastw, a1, b1;
+
+	i = b->len - 1;
+	lastw = b->w[i];
+	while (lastw >> j && j != 32) j++;
+
+	PreMul_Bin(P, Q, glob_epoints);
+
+	/* *
+	 * ecurve2_padd doesn't work with point at infinity
+	 * therefore, R must be set with an initial value
+	 * which is not "point at infinity" before the loop
+	 * */
+	index = (a->w[i] >> --j) & 1;
+	index += ((b->w[i] >> j) & 1) << 1;
+	if (j == 0) {
+		i--; j = 32;
+	}
+	epoint2_copy(glob_epoints[index], R);
+	for (--j; i >= 0; i--, j = 31) {
+		a1 = a->w[i];
+		b1 = b->w[i];
+		while (j) {
+			index = (a1 >> j) & 1;
+			index += (b1 >> (j - 1)) & 2;
+			ecurve2_double(R);
+			if (index) ecurve2_padd(glob_epoints[index], R);
+			j--;
+		}
+		index = (a1 & 1) + ((b1 & 1) << 1);
+		ecurve2_double(R);
+		if (index) ecurve2_padd(glob_epoints[index], R);
+	}
+}
+
+// bug when m = 257
+void ShamirMul_Bin_bug(big a, pepoint P, big b, pepoint Q, pepoint R)
 {
 	int bita, bitb, i, j = 0, index;
 	DWORD shift = 1, lastw, a1, b1;
