@@ -31,8 +31,7 @@ inline void PreMul_Bin3(pepoint P1, pepoint P2, pepoint P3, pepoint *plist)
 	//}
 }
 
-void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
-	pepoint P1, pepoint P2, pepoint P3, pepoint R)
+void ShamirMul_Bin3(big k1, big k2, big k3, pepoint P1, pepoint P2, pepoint P3, pepoint R)
 {
 	int tmp, i, j = 0, index;
 	DWORD w1, w2, w3;
@@ -40,8 +39,8 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	i = k3->len - 1;
 	tmp = k3->w[i];
 	while (tmp >> j && j != 32) j++;
-	
-	PreMul_Bin3(P1, P2, P3, shrBin->plist);
+
+	PreMul_Bin3(P1, P2, P3, glob_epoints);
 
 	/* *
 	* ecurve2_padd doesn't work with point at infinity
@@ -51,7 +50,7 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 	index = (k1->w[i] >> --j) & 1;
 	index += ((k2->w[i] >> j) & 1) << 1;
 	index += ((k3->w[i] >> j) & 1) << 2;
-	epoint2_copy(shrBin->plist[index], R);
+	epoint2_copy(glob_epoints[index], R);
 	if (j == 0) {
 		i--; j = 32;
 	}
@@ -64,15 +63,13 @@ void ShamirMul_Bin3_ptr(PL *shrBin, big k1, big k2, big k3,
 			index += ((w2 >> j) & 1) << 1;
 			index += ((w3 >> j) & 1) << 2;
 			ecurve2_double(R);
-			if (index)
-				ecurve2_padd(shrBin->plist[index], R);
+			if (index) ecurve2_padd(glob_epoints[index], R);
 			//cout << "R\n"; cotnumEp(R);
 			j--;
 		}
 		index = (w1 & 1) + ((w2 & 1) << 1) + ((w3 & 1) << 2);
 		ecurve2_double(R);
-		if (index)
-			ecurve2_padd(shrBin->plist[index], R);
+		if (index) ecurve2_padd(glob_epoints[index], R);
 		//cout << "R\n"; cotnumEp(R);
 	}
 }
@@ -93,7 +90,7 @@ void test_bin3(csprng &Rng, pepoint P, big n, string msg)
 	PL shrBin(8);
 	//ecurve2_mult(a, P, Q);
 	int count = 0, cmp = 0;
-	for (int i = 0; i < 10000; i++) {
+	for (int i = 0; i < 5000; i++) {
 		//strong_bigdig(&Rng, 4, 16, k);
 		//std::cout << "k: "; cotnum(k, stdout);
 		strong_bigrand(&Rng, n, k);
@@ -102,7 +99,7 @@ void test_bin3(csprng &Rng, pepoint P, big n, string msg)
 		strong_bigdig(&Rng, 100, 10, b);*/
 		ShamirDecompose3(k, k1, k2, k3, P, P1, P2, P3);
 
-		ShamirMul_Bin3_ptr(&shrBin, k1, k2, k3, P1, P2, P3, R);
+		ShamirMul_Bin3(k1, k2, k3, P1, P2, P3, R);
 		//ecurve2_mult2(a, P, b, Q, R1);
 		ecurve2_mult(k, P, R2);
 		//std::cout << "R: "; cotnumEp(R);

@@ -83,7 +83,7 @@ void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg)
 		ShamirDecompose3(k, k1, k2, k3, P, P1, P2, P3);
 
 		ShamirMul_Bin_n(d, &shrBin, kx, Px, R);
-		ShamirMul_Bin3_ptr(&shrBin2, k1, k2, k3, P1, P2, P3, R1);
+		ShamirMul_Bin3(k1, k2, k3, P1, P2, P3, R1);
 		ecurve2_mult(k, P, R2);
 		std::cout << "R : \n"; cotnumEp(R);
 		std::cout << "R1: \n"; cotnumEp(R1);

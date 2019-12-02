@@ -41,7 +41,7 @@ typedef struct PointList {
 	void Destructor();
 } PL;
 
-#define LEN_GLOB_EPOINTS 30
+#define LEN_GLOB_EPOINTS 300
 //extern PointList glob_epoints;
 extern pepoint glob_epoints[LEN_GLOB_EPOINTS];
 
