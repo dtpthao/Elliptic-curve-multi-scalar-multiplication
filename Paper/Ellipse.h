@@ -42,8 +42,10 @@ typedef struct PointList {
 } PL;
 
 #define LEN_GLOB_EPOINTS 300
+#define LEN_GLOB_BIGS 100
 //extern PointList glob_epoints;
 extern pepoint glob_epoints[LEN_GLOB_EPOINTS];
+extern big glob_bigs[LEN_GLOB_BIGS];
 
 void InitStrongRNG(csprng *Rng);
 

@@ -27,9 +27,8 @@ int main()
 	//int m[NUM_OF_EC + 1] = { 0 };// { 163, 233, 283, 409, 571, 0 };
 	int m[NUM_OF_EC + 1] = { 163, 233, 283, 409, 571, 0 };
 
-	for (int i = 0; i < LEN_GLOB_EPOINTS; i++) {
-		glob_epoints[i] = epoint_init();
-	}
+	for (int i = 0; i < LEN_GLOB_EPOINTS; i++) glob_epoints[i] = epoint_init();
+	for (int i = 0; i < LEN_GLOB_BIGS; i++) glob_bigs[i] = mirvar(0);
 
 	string msg;
 	int len = 0;
@@ -43,8 +42,8 @@ int main()
 		//cout << m[i] << "\t";
 		//TestShrMul_Bin(Rng, P, n, msg);
 		//test_bin3(Rng, P, n, msg);
-		test_bin_n(3, Rng, P, n, msg);
-		//test_dJSF(3, Rng, P, n, msg);
+		//test_bin_n(3, Rng, P, n, msg);
+		test_dJSF(3, Rng, P, n, msg);
 		//compares(Rng, P, n, res[i]);
 	}
 	//cout << endl << "without PreMul_Bin_n norm" << endl;
@@ -54,9 +53,8 @@ int main()
 
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
 
-	for (int i = 0; i < LEN_GLOB_EPOINTS; i++) {
-		epoint_free(glob_epoints[i]);
-	}
+	for (int i = 0; i < LEN_GLOB_EPOINTS; i++) epoint_free(glob_epoints[i]);
+	for (int i = 0; i < LEN_GLOB_BIGS; i++) mirkill(glob_bigs[i]);
 	epoint_free(P);
 	mirkill(a); mirkill(b); mirkill(k);
 	mirexit();
