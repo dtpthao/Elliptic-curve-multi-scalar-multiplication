@@ -38,6 +38,13 @@ struct Result {
 	unsigned int c[LIB + 1] = { 0 };
 };
 
+/*====================================== newtest.cpp============================================ */
+void compares(csprng &Rng, pepoint P, big n, Result &res);
+void printcompares(Result res[NUM_OF_EC + 1], int *m);
+
+void compare_prepowmodJSFs(csprng &Rng, pepoint P, big n, Result &res);
+void printcompares_JSFs(Result res[NUM_OF_EC + 1], int *m);
+/*============================================================================================== */
 
 void TestBin(csprng &Rng, pepoint P, big n, Result &res);
 /*
@@ -55,11 +62,6 @@ void TestJSF(csprng &Rng, pepoint P, big n, Result &res, string &msg);
 
 ////////////////////////////////////////////////////////////////////////////
 void Test(csprng &Rng, pepoint P, big n, Result &res, string &msg);
-
-/* newtest.cpp */
-void compares(csprng &Rng, pepoint P, big n, Result &res);
-#define NUM_OF_P 5
-void printcompares_bin(Result res[NUM_OF_P + 1], int *m);
 
 
 /************************************************************************

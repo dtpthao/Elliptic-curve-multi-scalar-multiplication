@@ -138,14 +138,14 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 }
 
 
-void printcompares_bin(Result res[NUM_OF_EC + 1], int *m)
+void printcompares(Result res[NUM_OF_EC + 1], int *m)
 {
 	const int ilib = 5;
 
 	for (int i = 1; i <= ilib; i++) {
 		res[NUM_OF_EC].p[i] = res[0].p[i] + res[1].p[i]
 			+ res[2].p[i] + res[3].p[i] + res[4].p[i];
-		res[NUM_OF_EC].p[i] /= NUM_OF_P;
+		res[NUM_OF_EC].p[i] /= NUM_OF_EC;
 	}
 	for (int i = 0; i <= NUM_OF_EC; i++) {
 		res[i].p[0] = 100;
@@ -166,4 +166,130 @@ void printcompares_bin(Result res[NUM_OF_EC + 1], int *m)
 		printf("%2d | %4d: %13d %13d %13d %13d %13d %13d\n",
 			i, m[i], res[i].c[0], res[i].c[1], res[i].c[2], res[i].c[3], res[i].c[4], res[i].c[ilib]);
 	}
+}
+
+#define TESTJSFs 5000
+#define REPEATJSFs 10
+void compare_prepowmodJSFs(csprng &Rng, pepoint P, big n, Result &res)
+{
+	stopWatch timer1, timer2, timer3, timer4, timer5;
+	LONGLONG dur1, min1 = LONG_MAX,
+		dur2, min2 = LONG_MAX,
+		dur3, min3 = LONG_MAX,
+		dur5, min5 = LONG_MAX,
+		dur4, min4 = LONG_MAX;
+	big a = mirvar(1), b = mirvar(1);
+	big	g = mirvar(1), k = mirvar(1);
+	const int dimens = 5;
+	big *kx = new big[dimens];
+	pepoint *Px = new pepoint[dimens];
+	for (int i = 0; i < dimens; i++) {
+		kx[i] = mirvar(0);
+		Px[i] = epoint_init();
+	}
+	pepoint	R = epoint_init();
+	pepoint	Q = epoint_init();
+
+	int count1 = 0, count2 = 0;
+	for (int i = 0; i < TESTJSFs; i++) {
+		strong_bigrand(&Rng, n, k);
+
+		for (int j = 0; j < REPEATJSFs; j++) {
+			startTimer(&timer1);
+			ScalarMul_Bin_L2R(k, P, R);
+			stopTimer(&timer1);
+			dur1 = getTickCount(&timer1);
+			min1 = (min1 < dur1) ? min1 : dur1;
+		}
+
+		ShamirDecompose(k, P, a, Q, b);
+		for (int j = 0; j < REPEATJSFs; j++) {
+			startTimer(&timer2);
+			PreMul_JSF(P, Q, glob_epoints);
+			stopTimer(&timer2);
+			dur2 = getTickCount(&timer2);
+			min2 = (min2 < dur2) ? min2 : dur2;
+		}
+
+		ShamirDecompose_n(3, k, kx, P, Px);
+		for (int j = 0; j < REPEATJSFs; j++) {
+			startTimer(&timer3);
+			PreMul_dJSF(3, 27, Px, glob_epoints);
+			stopTimer(&timer3);
+			dur3 = getTickCount(&timer3);
+			min3 = (min3 < dur3) ? min3 : dur3;
+		}
+
+		ShamirDecompose_n(4, k, kx, P, Px);
+		for (int j = 0; j < REPEATJSFs; j++) {
+			startTimer(&timer4);
+			PreMul_dJSF(4, 81, Px, glob_epoints);
+			stopTimer(&timer4);
+			dur4 = getTickCount(&timer4);
+			min4 = (min4 < dur4) ? min4 : dur4;
+		}
+
+		ShamirDecompose_n(5, k, kx, P, Px);
+		for (int j = 0; j < REPEATJSFs; j++) {
+			startTimer(&timer5);
+			PreMul_dJSF(5, 243, Px, glob_epoints);
+			stopTimer(&timer5);
+			dur5 = getTickCount(&timer5);
+			min5 = (min5 < dur5) ? min5 : dur5;
+		}
+		res.t[0] += min1;
+		res.t[1] += min2;
+		res.t[2] += min3;
+		res.t[3] += min4;
+		res.t[4] += min5;
+	}
+	res.t[0] /= TESTJSFs;
+	res.t[1] /= TESTJSFs;
+	res.t[2] /= TESTJSFs;
+	res.t[3] /= TESTJSFs;
+	res.t[4] /= TESTJSFs;
+	res.p[1] = (res.t[1] / res.t[0]) * 100;
+	res.p[2] = (res.t[2] / res.t[0]) * 100;
+	res.p[3] = (res.t[3] / res.t[0]) * 100;
+	res.p[4] = (res.t[4] / res.t[0]) * 100;
+
+	mirkill(a); mirkill(b);
+	mirkill(g); mirkill(k);
+	for (int i = 0; i < dimens; i++) {
+		mirkill(kx[i]);
+		epoint_free(Px[i]);
+	}
+	epoint_free(Q);
+	epoint_free(R);
+}
+
+void printcompares_JSFs(Result res[NUM_OF_EC + 1], int *m)
+{
+	const int lib = 4;
+	res[NUM_OF_EC].p[0] = 100;
+
+	for (int i = 0; i <= NUM_OF_EC; i++) {
+		res[i].p[0] = 100;
+	}
+
+	for (int i = 1; i <= lib; i++) {
+		res[NUM_OF_EC].p[i] = res[0].p[i] + res[1].p[i]
+			+ res[2].p[i] + res[3].p[i] + res[4].p[i];
+		res[NUM_OF_EC].p[i] /= NUM_OF_EC;
+	}
+
+	cout << setw(19) << "SclMul          " << "Bin1         preJSF       preJSF3       preJSF4       preJSF5\n";
+	for (int i = 0; i < NUM_OF_EC; i++) {
+		printf("%2d | %4d: %13.3f %13.3f %13.3f %13.3f %13.3f\n",
+			i, m[i], res[i].t[0], res[i].t[1], res[i].t[2], res[i].t[3], res[i].t[lib]);
+	}
+	cout << endl;
+	for (int i = 0; i < NUM_OF_EC; i++) {
+		printf("%2d | %4d: %12.1f%% %12.1f%% %12.1f%% %12.1f%% %12.1f%%\n",
+			i, m[i], res[i].p[0], res[i].p[1], res[i].p[2], res[i].p[3], res[i].p[lib]);
+	}
+	printf("    avg  : %12.1f%% %12.1f%% %12.1f%% %12.1f%% %12.1f%%\n",
+		res[NUM_OF_EC].p[0], res[NUM_OF_EC].p[1], res[NUM_OF_EC].p[2], res[NUM_OF_EC].p[3], res[NUM_OF_EC].p[lib]);
+	cout << endl;
+	cout << "Test times: " << TESTJSFs << endl;
 }
