@@ -43,13 +43,13 @@ int main()
 		//TestShrMul_Bin(Rng, P, n, msg);
 		//test_bin3(Rng, P, n, msg);
 		//test_bin_n(3, Rng, P, n, msg);
-		test_dJSF(3, Rng, P, n, msg);
-		//compares(Rng, P, n, res[i]);
+		//test_dJSF(3, Rng, P, n, msg);
+		compares(Rng, P, n, res[i]);
 	}
 	//cout << endl << "without PreMul_Bin_n norm" << endl;
 	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
-	//cout << setw(19) << "" <<   "Bin1         JSF2         dJSF2          JSF4           JSF5           lib2\n";
-	//printcompares_bin(res, m);
+	cout << setw(19) << "" <<   "Bin1          Bin2          Bin3          Bin4          Bin5          lib1\n";
+	printcompares_bin(res, m);
 
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
 
