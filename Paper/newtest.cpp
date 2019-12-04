@@ -266,7 +266,6 @@ void compare_prepowmodJSFs(csprng &Rng, pepoint P, big n, Result &res)
 void printcompares_JSFs(Result res[NUM_OF_EC + 1], int *m)
 {
 	const int lib = 4;
-	res[NUM_OF_EC].p[0] = 100;
 
 	for (int i = 0; i <= NUM_OF_EC; i++) {
 		res[i].p[0] = 100;
@@ -293,3 +292,66 @@ void printcompares_JSFs(Result res[NUM_OF_EC + 1], int *m)
 	cout << endl;
 	cout << "Test times: " << TESTJSFs << endl;
 }
+
+#define TEST_A_D 50000
+void compare_Doub_Add(csprng &Rng, pepoint P, Result &res, int m)
+{
+	pepoint	A = epoint_init(), D = epoint_init();
+	big k = mirvar(0), a = mirvar(0), b = mirvar(0);
+	stopWatch timer1, timer2;
+	LONGLONG dur1, dur2;
+	double t1 = 0, t2 = 0;
+
+	for (int i = 0; i < TEST_A_D; i++) {
+		strong_bigdig(&Rng, m >> 1, 2, a);
+		strong_bigdig(&Rng, m >> 1, 2, b);
+		ecurve2_mult(a, P, A);
+		ecurve2_mult(b, P, D);
+		dur1 = 0; dur2 = 0;
+		for (int j = 0; j < 10; j++) {
+			startTimer(&timer1);
+			ecurve2_double(D);
+			stopTimer(&timer1);
+			dur1 += getTickCount(&timer1);
+
+			startTimer(&timer2);
+			ecurve2_padd(D, A);
+			stopTimer(&timer2);
+			dur2 += getTickCount(&timer2);
+		}
+		res.t[0] += (double)dur1 / 10;
+		res.t[1] += (double)dur2 / 10;
+	}
+	res.t[0] /= TEST_A_D;
+	res.t[1] /= TEST_A_D;
+	res.p[1] = (res.t[1] / res.t[0]) * 100;
+
+	mirkill(a); mirkill(b); mirkill(k);
+	epoint_free(A); epoint_free(D);
+}
+
+void print_A_D(Result res[NUM_OF_EC + 1], int *m) 
+{
+	res[NUM_OF_EC].p[1] = 0;
+	res[NUM_OF_EC].p[0] = 100;
+	for (int i = 0; i < NUM_OF_EC; i++) {
+		res[i].p[0] = 100;
+		res[NUM_OF_EC].p[1] += res[i].p[1];
+	}
+	res[NUM_OF_EC].p[1] /= NUM_OF_EC;
+
+	cout << setw(17) << "" << "Double       Addition\n";
+
+	for (int i = 0; i < NUM_OF_EC; i++) {
+		printf("%2d | %4d: %13.3f %13.3f\n", i, m[i], res[i].t[0], res[i].t[1]);
+	}
+	cout << endl;
+	for (int i = 0; i < NUM_OF_EC; i++) {
+		printf("%2d | %4d: %12.1f%% %12.1f%%\n", i, m[i], res[i].p[0], res[i].p[1]);
+	}
+	printf("    avg  : %12.1f%% %12.1f%%\n", res[NUM_OF_EC].p[0], res[NUM_OF_EC].p[1]);
+
+	cout << "Test times: " << (TEST_A_D * 10) << endl;
+}
+
+

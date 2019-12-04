@@ -44,6 +44,9 @@ void printcompares(Result res[NUM_OF_EC + 1], int *m);
 
 void compare_prepowmodJSFs(csprng &Rng, pepoint P, big n, Result &res);
 void printcompares_JSFs(Result res[NUM_OF_EC + 1], int *m);
+
+void compare_Doub_Add(csprng &Rng, pepoint P, Result &res, int m);
+void print_A_D(Result res[NUM_OF_EC + 1], int *m);
 /*============================================================================================== */
 
 void TestBin(csprng &Rng, pepoint P, big n, Result &res);

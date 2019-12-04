@@ -45,14 +45,16 @@ int main()
 		//test_bin_n(3, Rng, P, n, msg);
 		//test_dJSF(3, Rng, P, n, msg);
 		//compares(Rng, P, n, res[i]);
-		compare_prepowmodJSFs(Rng, P, n, res[i]);
+		//compare_prepowmodJSFs(Rng, P, n, res[i]);
+		compare_Doub_Add(Rng, P, res[i], m[i]);
 	}
 	//cout << endl << "without PreMul_Bin_n norm" << endl;
 	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
 	//cout << setw(19) << "" <<   "Bin1          JSF2          JSF3          JSF4          JSF5          lib1\n";
 	//printcompares(res, m);
-	printcompares_JSFs(res, m);
-
+	//printcompares_JSFs(res, m);
+	print_A_D(res, m);
+	
 	//cout << endl << "\a\a\a\a\a\a\a\a\a\a\a" << endl;
 
 	for (int i = 0; i < LEN_GLOB_EPOINTS; i++) epoint_free(glob_epoints[i]);
