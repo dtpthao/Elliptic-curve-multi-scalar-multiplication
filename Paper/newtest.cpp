@@ -1,6 +1,6 @@
 #include "Test.h"
 
-#define TESTS 10000
+#define TESTS 5000
 #define REPEAT 10
 void compares(csprng &Rng, pepoint P, big n, Result &res)
 {
@@ -36,7 +36,6 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 
 	big a = mirvar(0), b = mirvar(0);
 
-	PL shrOpt(243);
 	for (int i = 0; i < TESTS; i++) {
 		strong_bigrand(&Rng, n, k);
 
@@ -48,19 +47,21 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			dur1 = getTickCount(&timer1);
 			min1 = (min1 < dur1) ? min1 : dur1; 
 
-			// Shr2
-			startTimer(&timer2);
+			// Bin2
 			ShamirDecompose(k, P, a, Q, b);
-			//ShamirMul_Bin(a, P, b, Q, R2);
+			startTimer(&timer2);
+			//ShamirDecompose(k, P, a, Q, b);
+			ShamirMul_Bin(a, P, b, Q, R2);
 			//ShamirMul_JSF(a, P, b, Q, R2);
 			stopTimer(&timer2);
 			dur2 = getTickCount(&timer2);
 			min2 = (min2 < dur2) ? min2 : dur2; 
 
-			// Shr3
-			startTimer(&timer3);
+			// Bin3
 			ShamirDecompose3(k, k1, k2, k3, P, P1, P2, P3);
-			//ShamirMul_Bin3_ptr(&shrOpt, k1, k2, k3, P1, P2, P3, R3);
+			startTimer(&timer3);
+			//ShamirDecompose3(k, k1, k2, k3, P, P1, P2, P3);
+			ShamirMul_Bin3(k1, k2, k3, P1, P2, P3, R3);
 			//ShamirDecompose_n(3, k, kx, P, Px);
 			//ShamirMul_Bin_n(3, kx, Px, R3);
 			//ShamirMul_dJSF(3, kx, Px, R3);
@@ -68,10 +69,11 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			dur3 = getTickCount(&timer3);
 			min3 = (min3 < dur3) ? min3 : dur3; 
 
-			// Shrn4
-			startTimer(&timer4);
+			// Bin4
 			ShamirDecompose_n(4, k, kx, P, Px);
-			//ShamirMul_Bin_n(4, kx, Px, R4);
+			startTimer(&timer4);
+			//ShamirDecompose_n(4, k, kx, P, Px);
+			ShamirMul_Bin_n(4, kx, Px, R4);
 			//ShamirDecompose(k, P, a, Q, b);
 			//ShamirMul_JSF(&shrOpt, a, P, b, Q, R4);
 			//ShamirMul_dJSF(4, kx, Px, R4);
@@ -79,10 +81,11 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			dur4 = getTickCount(&timer4);
 			min4 = (min4 < dur4) ? min4 : dur4; 
 
-			// Shrn5
-			startTimer(&timer5);
+			// Bin5
 			ShamirDecompose_n(5, k, kx, P, Px);
-			//ShamirMul_Bin_n(5, kx, Px, R5);
+			startTimer(&timer5);
+			//ShamirDecompose_n(5, k, kx, P, Px);
+			ShamirMul_Bin_n(5, kx, Px, R5);
 			//ShamirMul_dJSF(5, kx, Px, R5);
 			//ShamirDecompose(k, P, a, Q, b);
 			//ecurve2_mult2(a, P, b, Q, R5);
@@ -92,20 +95,20 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 
 			// lib1
 			startTimer(&timer6);
-			ShamirDecompose_n(3, k, kx, P, Px);
+			//ShamirDecompose_n(3, k, kx, P, Px);
 			//ecurve2_multn(3, kx, Px, R);
 			//ShamirDecompose(k, P, a, Q, b);
 			//ecurve2_mult2(a, P, b, Q, R);
-			//ecurve2_mult(k, P, R);
+			ecurve2_mult(k, P, R);
 			stopTimer(&timer6);
 			dur6 = getTickCount(&timer6);
 			min6 = (min6 < dur6) ? min6 : dur6;
 		}
-		//res.c[0] += epoint2_comp(R, R1);
-		//res.c[1] += epoint2_comp(R, R2);
-		//res.c[2] += epoint2_comp(R, R3);
-		//res.c[3] += epoint2_comp(R, R4);
-		//res.c[4] += epoint2_comp(R, R5);
+		res.c[0] += epoint2_comp(R, R1);
+		res.c[1] += epoint2_comp(R, R2);
+		res.c[2] += epoint2_comp(R, R3);
+		res.c[3] += epoint2_comp(R, R4);
+		res.c[4] += epoint2_comp(R, R5);
 		res.t[0] += min1;
 		res.t[1] += min2;
 		res.t[2] += min3;
@@ -125,7 +128,6 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 	res.p[4] = (res.t[4] / res.t[0]) * 100;
 	res.p[5] = (res.t[5] / res.t[0]) * 100;
 
-	shrOpt.Destructor();
 	for (int i = 0; i < dimens; i++) {
 		mirkill(kx[i]);
 		epoint_free(Px[i]);
