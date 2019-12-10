@@ -50,7 +50,7 @@ int main()
 	}
 	cout << endl << "without Shamir decomposition" << endl;
 	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
-	cout << setw(19) << "SclMul          " <<   "Bin1          Bin2          Bin3          Bin4          Bin5          lib1\n";
+	cout << setw(19) << "SclMul          " <<   "Bin1          lib2          lib3          lib4          lib5          lib1\n";
 	printcompares(res, m);
 	//printcompares_JSFs(res, m);
 	//print_A_D(res, m);
