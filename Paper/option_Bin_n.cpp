@@ -40,7 +40,6 @@ void ShamirMul_Bin_n(int n, big *k, pepoint *P, pepoint R)
 			}
 			ecurve2_double(R);
 			if (index) ecurve2_padd(glob_epoints[index], R);	// it's much better without normalizing, don't do it!
-			//cout << "R\n"; cotnumEp(R);
 			j--;
 		}
 		/* in case j = 0 */
@@ -48,7 +47,6 @@ void ShamirMul_Bin_n(int n, big *k, pepoint *P, pepoint R)
 		for (ii = 1; ii < n; ii++) index += (w[ii] & 1) << ii;
 		ecurve2_double(R);
 		if (index) ecurve2_padd(glob_epoints[index], R);
-		//cout << "R\n"; cotnumEp(R);
 	}
 }
 
@@ -73,8 +71,6 @@ void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg)
 		P3 = epoint_init();
 
 	msg = "Test ShrMul_Bin\n";
-	PL shrBin(8);
-	PL shrBin2(8);
 	//ecurve2_mult(a, P, Q);
 	int count = 0, cmp = 0;
 	for (int i = 0; i < 5000; i++) {
@@ -92,8 +88,6 @@ void test_bin_n(int d, csprng &Rng, pepoint P, big n, string msg)
 		count += cmp;
 	}
 	std::cout << "Cmp: " << count << std::endl;
-	shrBin.Destructor();
-	shrBin2.Destructor();
 	for (int i = 0; i < d; i++) {
 		mirkill(kx[i]);
 		epoint_free(Px[i]);
