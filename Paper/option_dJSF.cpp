@@ -2,7 +2,7 @@
 
 // Generate d-dimensional Simple JSF Form
 // d < 32
-DWORD GendJSF(int d, big *r, int **dJSF)
+DWORD GendJSF(int d, big *r, char **dJSF)
 {
 	int i, j, a0, a1, tmp;
 	int A[2];
@@ -91,8 +91,8 @@ void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
 void ShamirMul_dJSF(int d, big *k, pepoint *P, pepoint R)
 {
 	int tmp = 1, I0, idx = 0, i, j;
-	int **dJSF = new int*[d];
-	for (i = 0; i < d; i++) dJSF[i] = new int[700];
+	char **dJSF = new char*[d];
+	for (i = 0; i < d; i++) dJSF[i] = new char[700];
 	DWORD lendJSF;
 	for (i = 0; i < d; i++) tmp *= 3;
 
@@ -121,8 +121,8 @@ void ShamirMul_dJSF(int d, big *k, pepoint *P, pepoint R)
 void ShamirMul_dJSF_old(int d, PL *shrJSF, big *k, pepoint *P, pepoint R)
 {
 	int tmp = 1, I0, idx = 0, i, j;
-	int **dJSF = new int*[d];
-	for (i = 0; i < d; i++) dJSF[i] = new int[700];
+	char **dJSF = new char*[d];
+	for (i = 0; i < d; i++) dJSF[i] = new char[700];
 	DWORD lendJSF;
 	for (i = 0; i < d; i++) tmp *= 3;
 
