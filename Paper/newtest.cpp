@@ -300,21 +300,20 @@ void printcompares_JSFs(Result res[NUM_OF_EC + 1], int *m)
 	cout << "Test times: " << TESTJSFs << endl;
 }
 
-#define TEST_A_D 50000
-void compare_Doub_Add(csprng &Rng, pepoint P, Result &res, int m)
+#define TEST_A_D_N 50000
+void compare_Doub_Add_Neg(csprng &Rng, pepoint P, Result &res, int m)
 {
-	pepoint	A = epoint_init(), D = epoint_init();
+	pepoint	A = epoint_init(), D = epoint_init(), N = epoint_init();
 	big k = mirvar(0), a = mirvar(0), b = mirvar(0);
-	stopWatch timer1, timer2;
-	LONGLONG dur1, dur2;
-	double t1 = 0, t2 = 0;
+	stopWatch timer1, timer2, timer3;
+	LONGLONG dur1, dur2, dur3;
 
-	for (int i = 0; i < TEST_A_D; i++) {
+	for (int i = 0; i < TEST_A_D_N; i++) {
 		strong_bigdig(&Rng, m >> 1, 2, a);
 		strong_bigdig(&Rng, m >> 1, 2, b);
 		ecurve2_mult(a, P, A);
 		ecurve2_mult(b, P, D);
-		dur1 = 0; dur2 = 0;
+		dur1 = 0; dur2 = 0; dur3 = 0;
 		for (int j = 0; j < 10; j++) {
 			startTimer(&timer1);
 			ecurve2_double(D);
@@ -325,40 +324,52 @@ void compare_Doub_Add(csprng &Rng, pepoint P, Result &res, int m)
 			ecurve2_padd(D, A);
 			stopTimer(&timer2);
 			dur2 += getTickCount(&timer2);
+
+			startTimer(&timer3);
+			epoint2_copy(A, N);
+			epoint2_negate(N);
+			stopTimer(&timer3);
+			dur3 += getTickCount(&timer3);
 		}
 		res.t[0] += (double)dur1 / 10;
 		res.t[1] += (double)dur2 / 10;
+		res.t[2] += (double)dur3 / 10;
 	}
-	res.t[0] /= TEST_A_D;
-	res.t[1] /= TEST_A_D;
+	res.t[0] /= TEST_A_D_N;
+	res.t[1] /= TEST_A_D_N;
+	res.t[2] /= TEST_A_D_N;
 	res.p[1] = (res.t[1] / res.t[0]) * 100;
+	res.p[2] = (res.t[2] / res.t[0]) * 100;
 
 	mirkill(a); mirkill(b); mirkill(k);
-	epoint_free(A); epoint_free(D);
+	epoint_free(A); epoint_free(D); epoint_free(N);
 }
 
-void print_A_D(Result res[NUM_OF_EC + 1], int *m) 
+void print_A_D_N(Result res[NUM_OF_EC + 1], int *m) 
 {
 	res[NUM_OF_EC].p[1] = 0;
+	res[NUM_OF_EC].p[2] = 0;
 	res[NUM_OF_EC].p[0] = 100;
 	for (int i = 0; i < NUM_OF_EC; i++) {
 		res[i].p[0] = 100;
 		res[NUM_OF_EC].p[1] += res[i].p[1];
+		res[NUM_OF_EC].p[2] += res[i].p[2];
 	}
 	res[NUM_OF_EC].p[1] /= NUM_OF_EC;
+	res[NUM_OF_EC].p[2] /= NUM_OF_EC;
 
-	cout << setw(17) << "" << "Double       Addition\n";
+	cout << setw(17) << "" << "Double       Addition       Negate\n";
 
 	for (int i = 0; i < NUM_OF_EC; i++) {
-		printf("%2d | %4d: %13.3f %13.3f\n", i, m[i], res[i].t[0], res[i].t[1]);
+		printf("%2d | %4d: %13.3f %13.3f %13.3f\n", i, m[i], res[i].t[0], res[i].t[1], res[i].t[2]);
 	}
 	cout << endl;
 	for (int i = 0; i < NUM_OF_EC; i++) {
-		printf("%2d | %4d: %12.1f%% %12.1f%%\n", i, m[i], res[i].p[0], res[i].p[1]);
+		printf("%2d | %4d: %12.1f%% %12.1f%% %12.1f%%\n", i, m[i], res[i].p[0], res[i].p[1], res[i].p[2]);
 	}
-	printf("    avg  : %12.1f%% %12.1f%%\n", res[NUM_OF_EC].p[0], res[NUM_OF_EC].p[1]);
+	printf("    avg  : %12.1f%% %12.1f%% %12.1f%%\n", res[NUM_OF_EC].p[0], res[NUM_OF_EC].p[1], res[NUM_OF_EC].p[2]);
 
-	cout << "Test times: " << (TEST_A_D * 10) << endl;
+	cout << "Test times: " << (TEST_A_D_N * 10) << endl;
 }
 
 
