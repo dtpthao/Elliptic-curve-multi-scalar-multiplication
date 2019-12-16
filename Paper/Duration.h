@@ -32,15 +32,5 @@ void ShrDuration(big k, pepoint P, pepoint R, PL *opt, double &t);
 
 void ShrDuration(PL *opt, big a, pepoint P, big b, pepoint Q, pepoint R, double &t);
 
-//Draft
-/******************************************************************************/
-void ShrDecompDuration(big k, pepoint P, big a, pepoint Q, big b, double &t);
-
-/******************************************************************************/
-
-//
-//void GenFormSclDuration(big k, DWORD (*func) (big, char*), double &min, DWORD&);
-//
-//void GenFormShrDuration(big a, big b, DWORD(*func) (big, char*), double &min, DWORD&);
 
 #endif

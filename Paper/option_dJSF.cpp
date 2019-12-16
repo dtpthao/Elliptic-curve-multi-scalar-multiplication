@@ -2,28 +2,28 @@
 
 // Generate d-dimensional Simple JSF Form
 // d < 32
-DWORD GendJSF(int d, big *r, int **dJSF)
+DWORD GendJSF(int d, big *r, char **dJSF)
 {
 	int i, j, a0, a1, tmp;
 	int A[2];
 	DWORD lenJSF;
-	big *x = new big[d];
+	//big *x = new big[d]; ==> glob_bigs
 
 	i = j = lenJSF = a0 = A[0] = 0;
 	bool loop = false;
 	for (; i < d; i++) {
-		x[i] = mirvar(0);
-		copy(r[i], x[i]);
-		if (x[i]->w[0] & 1) A[a0] += 1 << i;
-		loop |= !(x[i]->len == 1 && x[i]->w[0] == 0 || x[i]->len == 0);
+		//x[i] = mirvar(0);
+		copy(r[i], glob_bigs[i]);
+		if (glob_bigs[i]->w[0] & 1) A[a0] += 1 << i;
+		loop |= !(glob_bigs[i]->len == 1 && glob_bigs[i]->w[0] == 0 || glob_bigs[i]->len == 0);
 	}
 
 	while (loop) {
 		a1 = a0 ^ 1;
 		A[a1] = 0;
 		for (i = 0; i < d; i++) {
-			dJSF[i][lenJSF] = x[i]->w[0] & 1;
-			if (x[i]->w[0] & 2) A[a1] += 1 << i;
+			dJSF[i][lenJSF] = glob_bigs[i]->w[0] & 1;
+			if (glob_bigs[i]->w[0] & 2) A[a1] += 1 << i;
 		}
 
 		/* check if A[a1] is a subset of A[a0] */
@@ -44,19 +44,17 @@ DWORD GendJSF(int d, big *r, int **dJSF)
 
 		loop = false;
 		for (i = 0; i < d; i++) {
-			sftbit(x[i], -1, x[i]);
+			sftbit(glob_bigs[i], -1, glob_bigs[i]);
 			if (dJSF[i][lenJSF] == -1) {
-				if (x[i]->len == 0) x[i]->len = 1;
-				if (x[i]->w[0] ^ 0xffffffff) x[i]->w[0]++;
-				else incr(x[i], 1, x[i]);
+				if (glob_bigs[i]->len == 0) glob_bigs[i]->len = 1;
+				if (glob_bigs[i]->w[0] ^ 0xffffffff) glob_bigs[i]->w[0]++;
+				else incr(glob_bigs[i], 1, glob_bigs[i]);
 			}
-			loop |= !(x[i]->len == 1 && x[i]->w[0] == 0 || x[i]->len == 0);
+			loop |= !(glob_bigs[i]->len == 1 && glob_bigs[i]->w[0] == 0 || glob_bigs[i]->len == 0);
 		}
 		lenJSF++;
 		a0 = a1;
 	}
-	for (i = 0; i < d; i++) mirkill(x[i]);
-
 	return lenJSF;
 }
 
@@ -89,29 +87,29 @@ void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
 }
 
 // R = k1*P1 + k2*P2 + ... + kd*Pd
-void ShamirMul_dJSF(int d, PL *shrJSF, big *k, pepoint *P, pepoint R)
+void ShamirMul_dJSF(int d, big *k, pepoint *P, pepoint R)
 {
 	int tmp = 1, I0, idx = 0, i, j;
-	int **dJSF = new int*[d];
-	for (i = 0; i < d; i++) dJSF[i] = new int[700];
+	char **dJSF = new char*[d];
+	for (i = 0; i < d; i++) dJSF[i] = new char[700];
 	DWORD lendJSF;
 	for (i = 0; i < d; i++) tmp *= 3;
 
 	idx = I0 = tmp >> 1;
-	PreMul_dJSF(d, tmp, P, shrJSF->plist);
+	PreMul_dJSF(d, tmp, P, glob_epoints);
 	lendJSF = GendJSF(d, k, dJSF);
 
 	for (j = 0, tmp = 1; j < d; j++, tmp *= 3) {
 		idx -= tmp * dJSF[j][lendJSF - 1];
 	}
-	epoint2_copy(shrJSF->plist[idx], R);
+	epoint2_copy(glob_epoints[idx], R);
 	for (i = lendJSF - 2; i >= 0; i--) {
 		idx = I0;
 		for (j = 0, tmp = 1; j < d; j++, tmp *= 3) {
 			idx -= tmp * dJSF[j][i];
 		}
 		ecurve2_double(R);
-		if (idx != I0) ecurve2_padd(shrJSF->plist[idx], R); // no epoint2_norm() needed here
+		if (idx != I0) ecurve2_padd(glob_epoints[idx], R); // no epoint2_norm() needed here
 	}
 
 	for (i = 0; i < d; i++) delete[] dJSF[i];
@@ -140,8 +138,8 @@ void test_dJSF(int d, csprng &Rng, pepoint P, big n, string msg)
 		P3 = epoint_init();
 
 	msg = "Test ShrMul_JSF\n";
-	PL shrJSF(27);
-	PL shrBin(8);
+	//PL shrJSF(27);
+	//PL shrBin(8);
 	//ecurve2_mult(a, P, Q);
 	int count = 0, cmp = 0;
 	for (int i = 0; i < 5000; i++) {
@@ -149,7 +147,7 @@ void test_dJSF(int d, csprng &Rng, pepoint P, big n, string msg)
 		ShamirDecompose_n(d, k, kx, P, Px);
 		//ShamirDecompose3(k, k1, k2, k3, P, P1, P2, P3);
 
-		ShamirMul_dJSF(d, &shrJSF, kx, Px, R);
+		ShamirMul_dJSF(d, kx, Px, R);
 		//ShamirMul_Bin_n(d, &shrBin, kx, Px, R1);
 		//ShamirMul_Bin3_ptr(&shrBin2, k1, k2, k3, P1, P2, P3, R1);
 		ecurve2_mult(k, P, R2);
@@ -160,8 +158,8 @@ void test_dJSF(int d, csprng &Rng, pepoint P, big n, string msg)
 		count += cmp;
 	}
 	std::cout << "Cmp: " << count << std::endl;
-	shrJSF.Destructor();
-	shrBin.Destructor();
+	//shrJSF.Destructor();
+	//shrBin.Destructor();
 	for (int i = 0; i < d; i++) {
 		mirkill(kx[i]);
 		epoint_free(Px[i]);

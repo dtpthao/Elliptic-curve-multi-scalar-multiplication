@@ -139,15 +139,3 @@ void ShrDecompDuration(big k, pepoint P, big a, pepoint Q, big b, double &t)
 	}
 	t += min;
 }
-
-
-//void GenDuration(big k, char* r, int code,
-//	void(*func) (big, char*)) {
-//	double dur;
-//	stopWatch timer;
-//	startTimer(&timer);
-//	(*func)(k, r);
-//	stopTimer(&timer);
-//	dur = getElapsedTime(&timer) * 1000;
-//};
-
