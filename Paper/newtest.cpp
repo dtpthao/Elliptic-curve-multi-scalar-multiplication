@@ -113,14 +113,14 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 		}
 		res.c[0] += epoint2_comp(R, R1);
 		res.c[1] += epoint2_comp(R, R2);
-		//res.c[2] += epoint2_comp(R, R3);
-		//res.c[3] += epoint2_comp(R, R4);
-		//res.c[4] += epoint2_comp(R, R5);
+		res.c[2] += epoint2_comp(R, R3);
+		res.c[3] += epoint2_comp(R, R4);
+		res.c[4] += epoint2_comp(R, R5);
 		res.t[0] += min1;
 		res.t[1] += min2;
-		//res.t[2] += min3;
-		//res.t[3] += min4;
-		//res.t[4] += min5;
+		res.t[2] += min3;
+		res.t[3] += min4;
+		res.t[4] += min5;
 		res.t[5] += min6;
 	}
 	res.t[0] /= TESTS;
