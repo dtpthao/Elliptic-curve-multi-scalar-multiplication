@@ -4,14 +4,6 @@
 #include "Ellipse.h"
 
 /*
-Compute a, b, Q and R = aP + bQ
-*/
-//void ShamirMul(big k, pepoint P, pepoint R,
-//	void(*func) (big, pepoint, big, pepoint, pepoint));
-void ShamirMul(big k, pepoint P, pepoint R, PL *opt,
-	void(*func) (PL *, big, pepoint, big, pepoint, pepoint));
-
-/*
 Compute a, b and Q
 (Copied from function above but no computing R = aP + bQ)
 */
@@ -24,9 +16,7 @@ Compute a, b
 */
 void ShamirDecompose(big k, big a, big b);
 
-
-void ShamirDecompose3(big k, big k1, big k2, big k3,
-	pepoint P, pepoint P1, pepoint P2, pepoint P3);
+void ShamirDecompose3(big k, big k1, big k2, big k3, pepoint P, pepoint P1, pepoint P2, pepoint P3);
 
 void ShamirDecompose_n(int n, big k, big *kx, pepoint P, pepoint *Px);
 
