@@ -55,7 +55,6 @@ DWORD GendJSF(int d, big *r, char **dJSF)
 		lenJSF++;
 		a0 = a1;
 	}
-	//for (i = 0; i < d; i++) mirkill(x[i]);
 	return lenJSF;
 }
 
@@ -111,36 +110,6 @@ void ShamirMul_dJSF(int d, big *k, pepoint *P, pepoint R)
 		}
 		ecurve2_double(R);
 		if (idx != I0) ecurve2_padd(glob_epoints[idx], R); // no epoint2_norm() needed here
-	}
-
-	for (i = 0; i < d; i++) delete[] dJSF[i];
-	delete[] dJSF;
-}
-
-// R = k1*P1 + k2*P2 + ... + kd*Pd
-void ShamirMul_dJSF_old(int d, PL *shrJSF, big *k, pepoint *P, pepoint R)
-{
-	int tmp = 1, I0, idx = 0, i, j;
-	char **dJSF = new char*[d];
-	for (i = 0; i < d; i++) dJSF[i] = new char[700];
-	DWORD lendJSF;
-	for (i = 0; i < d; i++) tmp *= 3;
-
-	idx = I0 = tmp >> 1;
-	PreMul_dJSF(d, tmp, P, shrJSF->plist);
-	lendJSF = GendJSF(d, k, dJSF);
-
-	for (j = 0, tmp = 1; j < d; j++, tmp *= 3) {
-		idx -= tmp * dJSF[j][lendJSF - 1];
-	}
-	epoint2_copy(shrJSF->plist[idx], R);
-	for (i = lendJSF - 2; i >= 0; i--) {
-		idx = I0;
-		for (j = 0, tmp = 1; j < d; j++, tmp *= 3) {
-			idx -= tmp * dJSF[j][i];
-		}
-		ecurve2_double(R);
-		if (idx != I0) ecurve2_padd(shrJSF->plist[idx], R); // no epoint2_norm() needed here
 	}
 
 	for (i = 0; i < d; i++) delete[] dJSF[i];
