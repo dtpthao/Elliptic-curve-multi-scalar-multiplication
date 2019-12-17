@@ -59,7 +59,7 @@ DWORD GendJSF(int d, big *r, char **dJSF)
 	return lenJSF;
 }
 
-void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
+void PreMul_dJSF2(int d, int len, pepoint *P, pepoint *plist)
 {
 	int i, j, k, i0 = len >> 1, upi, downi;
 
@@ -87,7 +87,7 @@ void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
 	}
 }
 
-void PreMul_dJSF2(int d, int len, pepoint *P, pepoint *plist)
+void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
 {
 	int i, j, k, i0 = len >> 1, upi, downi;
 
@@ -125,7 +125,7 @@ void ShamirMul_dJSF(int d, big *k, pepoint *P, pepoint R)
 	for (i = 0; i < d; i++) tmp *= 3;
 
 	idx = I0 = tmp >> 1;
-	PreMul_dJSF2(d, tmp, P, glob_epoints);
+	PreMul_dJSF(d, tmp, P, glob_epoints);
 	lendJSF = GendJSF(d, k, dJSF);
 
 	for (j = 0, tmp = 1; j < d; j++, tmp *= 3) {
