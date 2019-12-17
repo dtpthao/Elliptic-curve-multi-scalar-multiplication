@@ -49,10 +49,12 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 
 			// JSF2
 			//ShamirDecompose(k, P, a, Q, b);
+			copy(k, kx[0]);
+			epoint2_copy(P, Px[0]);
 			startTimer(&timer2);
-			ShamirDecompose(k, P, a, Q, b);
+			ShamirMul_Bin_n(1, kx, Px, R2);
 			//ShamirMul_Bin(a, P, b, Q, R2);
-			ShamirMul_JSF(a, P, b, Q, R2);
+			//ShamirMul_JSF(a, P, b, Q, R2);
 			//ecurve2_mult2(a, P, b, Q, R2);
 			stopTimer(&timer2);
 			dur2 = getTickCount(&timer2);
@@ -66,7 +68,7 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			//ShamirMul_Bin3(k1, k2, k3, P1, P2, P3, R3);
 			ShamirDecompose_n(3, k, kx, P, Px);
 			//ShamirMul_Bin_n(3, kx, Px, R3);
-			ShamirMul_dJSF(3, kx, Px, R3);
+			//ShamirMul_dJSF(3, kx, Px, R3);
 			//ecurve2_multn(3, kx, Px, R3);
 			stopTimer(&timer3);
 			dur3 = getTickCount(&timer3);
@@ -78,8 +80,7 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			ShamirDecompose_n(4, k, kx, P, Px);
 			//ShamirMul_Bin_n(4, kx, Px, R4);
 			//ShamirDecompose(k, P, a, Q, b);
-			//ShamirMul_JSF(&shrOpt, a, P, b, Q, R4);
-			ShamirMul_dJSF(4, kx, Px, R4);
+			//ShamirMul_dJSF(4, kx, Px, R4);
 			//ecurve2_multn(4, kx, Px, R4);
 			stopTimer(&timer4);
 			dur4 = getTickCount(&timer4);
@@ -90,7 +91,7 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			startTimer(&timer5);
 			ShamirDecompose_n(5, k, kx, P, Px);
 			//ShamirMul_Bin_n(5, kx, Px, R5);
-			ShamirMul_dJSF(5, kx, Px, R5);
+			//ShamirMul_dJSF(5, kx, Px, R5);
 			//ShamirDecompose(k, P, a, Q, b);
 			//ecurve2_mult2(a, P, b, Q, R5);
 			//ecurve2_multn(5, kx, Px, R5);

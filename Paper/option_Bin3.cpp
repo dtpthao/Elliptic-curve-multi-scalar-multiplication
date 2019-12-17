@@ -25,10 +25,6 @@ inline void PreMul_Bin3(pepoint P1, pepoint P2, pepoint P3, pepoint *plist)
 	epoint2_copy(plist[6], plist[7]);
 	ecurve2_padd(P1, plist[7]);
 	epoint2_norm(plist[7]);
-
-	//for (int i = 0; i < 8; i++) {
-	//	std::cout << "pl[" << i << "] :\n"; cotnumEp(plist[i]);
-	//}
 }
 
 void ShamirMul_Bin3(big k1, big k2, big k3, pepoint P1, pepoint P2, pepoint P3, pepoint R)
@@ -64,13 +60,11 @@ void ShamirMul_Bin3(big k1, big k2, big k3, pepoint P1, pepoint P2, pepoint P3, 
 			index += ((w3 >> j) & 1) << 2;
 			ecurve2_double(R);
 			if (index) ecurve2_padd(glob_epoints[index], R);
-			//cout << "R\n"; cotnumEp(R);
 			j--;
 		}
 		index = (w1 & 1) + ((w2 & 1) << 1) + ((w3 & 1) << 2);
 		ecurve2_double(R);
 		if (index) ecurve2_padd(glob_epoints[index], R);
-		//cout << "R\n"; cotnumEp(R);
 	}
 }
 
@@ -87,7 +81,6 @@ void test_bin3(csprng &Rng, pepoint P, big n, string msg)
 		R1 = epoint_init(),
 		R2 = epoint_init();
 	msg = "Test ShrMul_Bin\n";
-	PL shrBin(8);
 	//ecurve2_mult(a, P, Q);
 	int count = 0, cmp = 0;
 	for (int i = 0; i < 5000; i++) {
@@ -120,7 +113,6 @@ void test_bin3(csprng &Rng, pepoint P, big n, string msg)
 		count += cmp;
 	}
 	std::cout << "Cmp: " << count << std::endl;
-	shrBin.Destructor();
 	mirkill(k1); mirkill(k2); mirkill(k3); mirkill(k);
 	epoint_free(P1); epoint_free(P2); epoint_free(P3);
 	epoint_free(R); epoint_free(R1); epoint_free(R2);

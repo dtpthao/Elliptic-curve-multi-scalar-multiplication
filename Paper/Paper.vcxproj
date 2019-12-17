@@ -140,9 +140,7 @@
     <ClCompile Include="option_dJSF.cpp" />
     <ClCompile Include="option_JSF.cpp" />
     <ClCompile Include="option_NAF.cpp" />
-    <ClCompile Include="PrintTest.cpp" />
     <ClCompile Include="shr_decomp.cpp" />
-    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ms32.lib" />
@@ -153,7 +151,6 @@
     <ClInclude Include="miracl.h" />
     <ClInclude Include="option_Bin.h" />
     <ClInclude Include="option_JSF.h" />
-    <ClInclude Include="PrintTest.h" />
     <ClInclude Include="shr_decomp.h" />
     <ClInclude Include="Test.h" />
   </ItemGroup>
