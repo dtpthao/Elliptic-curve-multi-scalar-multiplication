@@ -59,34 +59,6 @@ DWORD GendJSF(int d, big *r, char **dJSF)
 	return lenJSF;
 }
 
-void PreMul_dJSF2(int d, int len, pepoint *P, pepoint *plist)
-{
-	int i, j, k, i0 = len >> 1, upi, downi;
-
-	for (i = 0, j = 1; i < d; i++, j *= 3) {
-		upi = i0 + j;
-		downi = i0 - j;
-		epoint_copy(P[i], plist[downi]);								// y[i]
-		epoint_copy(P[i], plist[upi]);
-		epoint2_negate(plist[upi]);		//negated point is normalized
-		for (k = 1; k <= (j >> 1); k++) {
-			epoint_copy(plist[upi], plist[upi + k]);
-			ecurve2_padd(plist[i0 + k], plist[upi + k]);  //pl[i0 + j + k] = pl[i0 + j] + pl[i0 + k]
-
-			epoint_copy(plist[upi], plist[upi - k]);
-			ecurve2_padd(plist[i0 - k], plist[upi - k]);  //pl[i0 + j - k] = pl[i0 + j] + pl[i0 + k]
-
-			epoint_copy(plist[downi], plist[downi + k]);
-			ecurve2_padd(plist[i0 + k], plist[downi + k]);//pl[i0 - j + k] = pl[i0 - j] + pl[i0 + k]
-
-			epoint_copy(plist[downi], plist[downi - k]);
-			ecurve2_padd(plist[i0 - k], plist[downi - k]);//pl[i0 - j - k] = pl[i0 - j] + pl[i0 - k]
-
-			// checked - no epoint2_norm() needed here
-		}
-	}
-}
-
 void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
 {
 	int i, j, k, i0 = len >> 1, upi, downi;
