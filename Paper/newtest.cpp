@@ -86,11 +86,11 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 			min4 = (min4 < dur4) ? min4 : dur4; 
 
 			// JSF1
-			ShamirDecompose_n(1, k, kx, P, Px);
+			ShamirDecompose_n(5, k, kx, P, Px);
 			startTimer(&timer5);
 			//ShamirDecompose_n(1, k, kx, P, Px);
 			//ShamirMul_Bin_n(5, kx, Px, R5);
-			ShamirMul_dJSF(1, kx, Px, R5);
+			ShamirMul_dJSF(5, kx, Px, R5);
 			//ShamirDecompose(k, P, a, Q, b);
 			//ecurve2_mult2(a, P, b, Q, R5);
 			//ecurve2_multn(5, kx, Px, R5);
@@ -100,11 +100,12 @@ void compares(csprng &Rng, pepoint P, big n, Result &res)
 
 			// lib1
 			startTimer(&timer6);
-			//ShamirDecompose_n(3, k, kx, P, Px);
+			ShamirDecompose_n(1, k, kx, P, Px);
+			ShamirMul_dJSF(1, kx, Px, R);
 			//ecurve2_multn(3, kx, Px, R);
 			//ShamirDecompose(k, P, a, Q, b);
 			//ecurve2_mult2(a, P, b, Q, R);
-			ecurve2_mult(k, P, R);
+			//ecurve2_mult(k, P, R);
 			stopTimer(&timer6);
 			dur6 = getTickCount(&timer6);
 			min6 = (min6 < dur6) ? min6 : dur6;

@@ -48,9 +48,9 @@ int main()
 		//compare_prepowmodJSFs(Rng, P, n, res[i]);
 		//compare_Doub_Add_Neg(Rng, P, res[i], m[i]);
 	}
-	cout << endl << "without Shamir decomposition" << endl;
-	//cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
-	cout << setw(19) << "SclMul          " <<   "Bin1          JSF2          JSF3          JSF4          JSF1          lib1\n";
+	//cout << endl << "without Shamir decomposition" << endl;
+	////cout << setw(19) << "" << "n=1           n=2           n=3           n=3           JSF3        lib(n=3)\n";
+	cout << setw(19) << "SclMul          " <<   "Bin1          JSF2          JSF3          JSF4          JSF5          JSF1\n";
 	printcompares(res, m);
 	//printcompares_JSFs(res, m);
 	//print_A_D_N(res, m);
