@@ -1,7 +1,7 @@
 #include "option_JSF.h"
 #include "Test.h"
 
-#define TESTJSFs 5000
+#define TESTJSFs 10000
 #define REPEATJSFs 10
 void compare_GendJSFs(csprng &Rng, pepoint P, big n, Result &res)
 {
