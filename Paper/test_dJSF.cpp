@@ -151,10 +151,10 @@ void printcompares_GendJSFs(Result res[NUM_OF_P + 1], int *m)
 	}
 	cout << endl;
 	for (int i = 0; i < NUM_OF_P; i++) {
-		printf("%2d | %4d: %12.1f%% %12.1f%% %12.1f%% %12.1f%% %12.1f%% %12.1f%%\n",
+		printf("%2d | %4d: %12.2f%% %12.2f%% %12.2f%% %12.2f%% %12.2f%% %12.2f%%\n",
 			i, m[i], res[i].p[0], res[i].p[1], res[i].p[2], res[i].p[3], res[i].p[4], res[i].p[lib]);
 	}
-	printf("    avg  : %12.1f%% %12.1f%% %12.1f%% %12.1f%% %12.1f%% %12.1f%%\n",
+	printf("    avg  : %12.2f%% %12.2f%% %12.2f%% %12.2f%% %12.2f%% %12.2f%%\n",
 		res[NUM_OF_P].p[0], res[NUM_OF_P].p[1], res[NUM_OF_P].p[2], res[NUM_OF_P].p[3], res[NUM_OF_P].p[4], res[NUM_OF_P].p[lib]);
 	cout << endl;
 	cout << "Test times: " << TESTJSFs << endl;
