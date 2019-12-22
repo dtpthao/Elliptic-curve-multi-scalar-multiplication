@@ -141,6 +141,7 @@
     <ClCompile Include="option_JSF.cpp" />
     <ClCompile Include="option_NAF.cpp" />
     <ClCompile Include="shr_decomp.cpp" />
+    <ClCompile Include="test_dJSF.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ms32.lib" />

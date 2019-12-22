@@ -83,3 +83,24 @@ void ShamirDecompose_n(int n, big k, big *kx, pepoint P, pepoint *Px)
 
 	mirkill(tmp);
 }
+
+void ShamirDecompose_nk(int n, big k, big *kx)
+{
+	if (k->len == 0) return;
+	DWORD len, i = 31;
+	big tmp = mirvar(1);
+
+	len = k->w[k->len - 1];
+	while (!(len & (1 << i))) i--;
+	len = (k->len << 5) - 31 + i;
+	len /= n;
+
+	sftbit(tmp, len, tmp);
+	copy(k, kx[0]);
+
+	for (i = 1; i < n; i++) {
+		divide(kx[i - 1], tmp, kx[i]);
+	}
+
+	mirkill(tmp);
+}

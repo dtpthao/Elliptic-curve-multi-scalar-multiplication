@@ -10,13 +10,7 @@
 #include "shr_decomp.h"
 
 
-#define LIB		5			//16
 
-struct Result {
-	double t[LIB + 1] = { 0 };
-	double p[LIB + 1] = { 0 };
-	unsigned int c[LIB + 1] = { 0 };
-};
 
 void compares(csprng &Rng, pepoint P, big n, Result &res);
 void printcompares(Result res[NUM_OF_EC + 1], int *m);

@@ -41,6 +41,14 @@ typedef struct PointList {
 	void Destructor();
 } PL;
 
+#define LIB		5			//16
+
+struct Result {
+	double t[LIB + 1] = { 0 };
+	double p[LIB + 1] = { 0 };
+	unsigned int c[LIB + 1] = { 0 };
+};
+
 #define LEN_GLOB_EPOINTS 300
 #define LEN_GLOB_BIGS 100
 //extern PointList glob_epoints;

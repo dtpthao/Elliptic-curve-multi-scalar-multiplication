@@ -66,7 +66,7 @@ void ShrDuration(big k, pepoint P, pepoint R, PL *opt,
 		startTimer(&timer);
 		/*ShamirDecomposit(k, P, a, Q, b);
 		(*func) (opt, a, P, b, Q, R);*/
-		ShamirMul(k, P, R, opt, (*func));
+		//ShamirMul(k, P, R, opt, (*func));
 		stopTimer(&timer);
 
 		dur = getTickCount(&timer);
