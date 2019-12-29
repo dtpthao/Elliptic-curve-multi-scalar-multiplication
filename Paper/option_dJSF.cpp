@@ -70,16 +70,16 @@ void PreMul_dJSF(int d, int len, pepoint *P, pepoint *plist)
 		epoint2_negate(plist[upi]);		//negated point is normalized
 		for (k = 1; k <= (j >> 1); k++) {
 			epoint_copy(plist[upi], plist[upi + k]);
-			ecurve2_padd(plist[i0 + k], plist[upi + k]);
+			ecurve2_padd(plist[i0 + k], plist[upi + k]);  //pl[i0 + j + k] = pl[i0 + j] + pl[i0 + k]
 
 			epoint_copy(plist[upi], plist[upi - k]);
-			ecurve2_padd(plist[i0 - k], plist[upi - k]);
+			ecurve2_padd(plist[i0 - k], plist[upi - k]);  //pl[i0 + j - k] = pl[i0 + j] + pl[i0 + k]
 
-			epoint_copy(plist[downi], plist[downi + k]);
-			ecurve2_padd(plist[i0 + k], plist[downi + k]);
+			epoint_copy(plist[upi - k], plist[downi + k]);
+			epoint2_negate(plist[downi + k]);//pl[i0 - j + k] = pl[i0 - j] + pl[i0 + k]
 
-			epoint_copy(plist[downi], plist[downi - k]);
-			ecurve2_padd(plist[i0 - k], plist[downi - k]);
+			epoint_copy(plist[upi + k], plist[downi - k]);
+			epoint2_negate(plist[downi - k]);//pl[i0 - j - k] = pl[i0 - j] + pl[i0 - k]
 
 			// checked - no epoint2_norm() needed here
 		}
